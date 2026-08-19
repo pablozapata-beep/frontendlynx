@@ -1,0 +1,14 @@
+{
+  "name": "@frontendlinx/tokens",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Design tokens por marca (color, tipografia, spacing, radius), exportados como CSS custom properties",
+  "files": [
+    "dist",
+    "brands"
+  ],
+  "scripts": {
+    "build": "node scripts/build-css.mjs",
+    "prepublishOnly": "npm run build"
+  }
+}

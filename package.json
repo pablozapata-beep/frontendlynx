@@ -1,0 +1,21 @@
+{
+  "name": "frontendlinx",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Framework de componentes reutilizables Vue 3 de la organizacion, multi-marca",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "tokens:build": "npm run build -w @frontendlinx/tokens",
+    "dev": "npm run tokens:build && npm run dev -w @frontendlinx/ui",
+    "storybook": "npm run tokens:build && npm run storybook -w @frontendlinx/ui",
+    "build": "npm run tokens:build && npm run build -w @frontendlinx/ui",
+    "test": "npm run test -w @frontendlinx/ui",
+    "publish:tokens": "npm publish -w @frontendlinx/tokens",
+    "publish:ui": "npm publish -w @frontendlinx/ui"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

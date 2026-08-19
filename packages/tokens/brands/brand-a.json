@@ -1,0 +1,25 @@
+{
+  "brand": "brand-a",
+  "color": {
+    "primary": "#1B4DFF",
+    "primary-hover": "#153DCC",
+    "secondary": "#FF6B35",
+    "background": "#FFFFFF",
+    "text": "#1A1A1A",
+    "danger": "#E5484D"
+  },
+  "font": {
+    "family-heading": "'Poppins', sans-serif",
+    "family-body": "'Inter', sans-serif"
+  },
+  "radius": {
+    "sm": "4px",
+    "md": "8px",
+    "lg": "16px"
+  },
+  "spacing": {
+    "sm": "8px",
+    "md": "16px",
+    "lg": "24px"
+  }
+}

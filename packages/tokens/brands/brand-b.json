@@ -1,0 +1,25 @@
+{
+  "brand": "brand-b",
+  "color": {
+    "primary": "#0E9F6E",
+    "primary-hover": "#0B7A55",
+    "secondary": "#F5A623",
+    "background": "#FAFAFA",
+    "text": "#0F1F1A",
+    "danger": "#D9364A"
+  },
+  "font": {
+    "family-heading": "'Sora', sans-serif",
+    "family-body": "'Nunito Sans', sans-serif"
+  },
+  "radius": {
+    "sm": "2px",
+    "md": "6px",
+    "lg": "12px"
+  },
+  "spacing": {
+    "sm": "8px",
+    "md": "16px",
+    "lg": "24px"
+  }
+}

@@ -1,0 +1,7 @@
+/*
+  Reset minimo de la libreria. Las variables de marca (--color-primary, --font-family-body, etc.)
+  las provee @frontendlinx/tokens via [data-brand="..."] en un ancestro (ver README).
+*/
+.ui-button {
+  box-sizing: border-box;
+}
