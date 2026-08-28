@@ -1,3 +1,12 @@
 import './style.css'
 
 export { default as Button } from './components/Button/Button.vue'
+export { default as Pill } from './components/Pill/Pill.vue'
+export { default as Card } from './components/Card/Card.vue'
+export { default as Countdown } from './components/Countdown/Countdown.vue'
+export { default as Carousel } from './components/Carousel/Carousel.vue'
+export { default as CarouselSlide } from './components/Carousel/CarouselSlide.vue'
+export { default as Notification } from './components/Notification/Notification.vue'
+export { default as NotificationsContainer } from './components/Notification/NotificationsContainer.vue'
+export { useNotifications } from './components/Notification/useNotifications'
+export type { NotificationVariant, NotificationItem } from './components/Notification/useNotifications'

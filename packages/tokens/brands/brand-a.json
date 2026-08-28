@@ -1,16 +1,27 @@
 {
   "brand": "brand-a",
   "color": {
-    "primary": "#1B4DFF",
-    "primary-hover": "#153DCC",
+    "primary": "#5fb602",
+    "primary-hover": "#6dd202",
     "secondary": "#FF6B35",
     "background": "#FFFFFF",
     "text": "#1A1A1A",
-    "danger": "#E5484D"
+    "danger": "#ea4c2b",
+    "success": "#5fb602",
+    "warning": "#f3c43b",
+    "info": "#2563EB",
+    "border": "#E5E7EB",
+    "surface": "#F7F8FA"
   },
   "font": {
     "family-heading": "'Poppins', sans-serif",
     "family-body": "'Inter', sans-serif"
+  },
+  "fontWeight":{
+    "sm":"300",
+    "md":"400",
+    "lg":"700",
+    "xlg":"800"
   },
   "radius": {
     "sm": "4px",
@@ -18,8 +29,12 @@
     "lg": "16px"
   },
   "spacing": {
-    "sm": "8px",
-    "md": "16px",
-    "lg": "24px"
+    "sm": ".5rem",
+    "md": "1rem",
+    "lg": "1.2rem"
+  },
+  "shadow": {
+    "sm": "0 0px 4px rgba(0, 0, 0, 0.4)",
+    "md": "0 4px 12px rgba(0, 0, 0, 0.08)"
   }
 }

@@ -4,7 +4,7 @@ import Button from './Button.vue'
 const meta = {
   title: 'Components/Button',
   component: Button,
-  tags: ['autodocs'],
+  tags: ['autodocs', 'forms'],
   argTypes: {
     variant: { control: 'select', options: ['primary', 'secondary', 'danger'] },
     size: { control: 'select', options: ['sm', 'md', 'lg'] },

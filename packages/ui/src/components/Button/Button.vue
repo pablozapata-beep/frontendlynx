@@ -28,6 +28,9 @@ withDefaults(
 
 <style scoped>
 .ui-button {
+  display:inline-flex;
+  justify-content: center;
+  align-items: center;
   font-family: var(--font-family-body);
   border-radius: var(--radius-md);
   border: none;
@@ -64,15 +67,18 @@ withDefaults(
 }
 
 .ui-button--sm {
-  padding: var(--spacing-sm) var(--spacing-md);
+  height:35px;
+  padding:0 var(--spacing-md);
   font-size: 14px;
 }
 .ui-button--md {
-  padding: var(--spacing-md) var(--spacing-lg);
+  height:42px;
+  padding: 0 var(--spacing-lg);
   font-size: 16px;
 }
 .ui-button--lg {
-  padding: var(--spacing-lg) calc(var(--spacing-lg) * 1.5);
+  height:45px;
+  padding: 0 calc(var(--spacing-lg) * 1.5);
   font-size: 18px;
 }
 </style>

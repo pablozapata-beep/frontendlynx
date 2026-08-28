@@ -63,10 +63,17 @@ npm test
 Seguir el patron de `packages/ui/src/components/Button/`:
 
 - `NombreComponente.vue` — usa solo variables CSS de tokens, nunca valores de marca hardcodeados.
-- `NombreComponente.stories.ts` — variantes visibles en el catalogo (con `tags: ['autodocs']` para
-  que Storybook genere la pagina de documentacion sola).
+- `NombreComponente.stories.ts` — variantes visibles en el catalogo, con `tags: ['autodocs', '<categoria>']`
+  (`autodocs` genera la pagina de documentacion sola; la categoria alimenta el filtro por tags del
+  sidebar de Storybook — usar una de las existentes: `forms`, `display`, `media`, `feedback`, o sumar
+  una nueva si no encaja).
 - `NombreComponente.spec.ts` — tests con Vitest + Vue Testing Library.
 - Exportarlo desde `packages/ui/src/index.ts`.
+
+Para estado compartido entre componentes (ej. una cola de notificaciones), usar un composable con
+estado en closure (ver `Notification/useNotifications.ts`) o `provide`/`inject` para compound
+components (ej. `Carousel` + `CarouselSlide`) — no Pinia, para no forzarle esa dependencia a quien
+consuma la libreria.
 
 ## Flujo de trabajo
 
