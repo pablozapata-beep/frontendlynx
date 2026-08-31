@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs'
+import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -28,11 +28,22 @@ for (const file of brandFiles) {
     .map(([name, value]) => `  --${name}: ${value};`)
     .join('\n')
 
-  const css = `[data-brand="${brand}"] {\n${vars}\n}\n`
+  let css = `[data-brand="${brand}"] {\n${vars}\n}\n`
+
+  // Overrides de diseño opcionales: CSS de mano, scoped por la marca, para
+  // divergencias que no se pueden expresar como el valor de una variable
+  // (forma, microinteracciones). Ver README > "Overrides de diseño por marca".
+  const overridesPath = join(brandsDir, `${brand}.overrides.css`)
+  const hasOverrides = existsSync(overridesPath)
+  if (hasOverrides) {
+    const overrides = readFileSync(overridesPath, 'utf-8')
+    css += `\n/* --- overrides de diseño de "${brand}" --- */\n${overrides}\n`
+  }
+
   const outFile = `${brand}.css`
   writeFileSync(join(distDir, outFile), css)
   allImports.push(outFile)
-  console.log(`tokens: generado dist/${outFile}`)
+  console.log(`tokens: generado dist/${outFile}${hasOverrides ? ' (con overrides)' : ''}`)
 }
 
 const indexCss = allImports.map((f) => `@import './${f}';`).join('\n') + '\n'

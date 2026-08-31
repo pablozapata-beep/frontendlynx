@@ -1,0 +1,41 @@
+{
+  "brand": "qtz",
+  "color": {
+    "primary": "#FDF300",
+    "primary-hover": "#FF6600",
+    "secondary": "#FF6600",
+    "background": "#FFFFFF",
+    "text": "#170D02",
+    "danger": "#E11D48",
+    "success": "#1EA672",
+    "warning": "#D97706",
+    "info": "#2563EB",
+    "border": "#E6E1F5",
+    "surface": "#F7F5FC"
+  },
+  "font": {
+    "family-heading": "'Outfit', sans-serif",
+    "family-body": "'Work Sans', sans-serif"
+  },
+  "fontWeight":{
+    "sm":"300",
+    "md":"400",
+    "lg":"700",
+    "xlg":"800"
+  },
+  "radius": {
+    "sm": "6px",
+    "md": "10px",
+    "lg": "18px",
+    "square":"0px"
+  },
+  "spacing": {
+    "sm": "8px",
+    "md": "16px",
+    "lg": "24px"
+  },
+  "shadow": {
+    "sm": "0 1px 2px rgba(0, 0, 0, 0.06)",
+    "md": "0 4px 12px rgba(0, 0, 0, 0.08)"
+  }
+}

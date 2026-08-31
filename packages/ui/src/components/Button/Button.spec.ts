@@ -12,12 +12,19 @@ describe('Button', () => {
     const wrapper = mount(Button)
     expect(wrapper.classes()).toContain('ui-button--primary')
     expect(wrapper.classes()).toContain('ui-button--md')
+    expect(wrapper.classes()).not.toContain('ui-button--outlined')
   })
 
   it('aplica la variante y tamano indicados', () => {
     const wrapper = mount(Button, { props: { variant: 'danger', size: 'lg' } })
     expect(wrapper.classes()).toContain('ui-button--danger')
     expect(wrapper.classes()).toContain('ui-button--lg')
+  })
+
+  it('agrega la clase outlined cuando se indica, sin afectar el variant', () => {
+    const wrapper = mount(Button, { props: { variant: 'secondary', outlined: true } })
+    expect(wrapper.classes()).toContain('ui-button--secondary')
+    expect(wrapper.classes()).toContain('ui-button--outlined')
   })
 
   it('respeta el estado disabled', () => {

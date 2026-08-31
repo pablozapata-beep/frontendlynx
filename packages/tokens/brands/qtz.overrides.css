@@ -1,0 +1,21 @@
+/*
+  Overrides de diseño propios de QTZ: forma y microinteracciones que no se
+  pueden expresar solo cambiando el valor de un token existente.
+*/
+:root {
+  --primary-button:linear-gradient(180deg, #FDF300 0%, #FF6600 100%);
+  --primary-button-hover:linear-gradient(180deg, #FF6600 0%, #FDF300 100%);
+;
+}
+
+[data-brand="qtz"] .ui-button.ui-button--primary {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--primary-button);
+  font-weight: 700;
+}
+
+[data-brand="qtz"] .ui-button.ui-button--primary:hover:not(:disabled) {
+   background: var(--primary-button-hover);
+}
+

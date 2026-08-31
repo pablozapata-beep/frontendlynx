@@ -1,5 +1,5 @@
 {
-  "brand": "brand-a",
+  "brand": "nwt",
   "color": {
     "primary": "#5fb602",
     "primary-hover": "#6dd202",
@@ -26,7 +26,8 @@
   "radius": {
     "sm": "4px",
     "md": "8px",
-    "lg": "16px"
+    "lg": "16px",
+    "square":"0px"
   },
   "spacing": {
     "sm": ".5rem",

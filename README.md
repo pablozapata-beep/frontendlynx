@@ -36,7 +36,7 @@ npm run storybook
 ```
 
 Abre `http://localhost:6006`. En el toolbar superior hay un selector **Marca** para alternar entre
-`Brand A` / `Brand B` y ver los componentes repintados con cada tema.
+`NWT` / `LTK` / `QTZ` y ver los componentes repintados con cada tema.
 
 ### Compilar la libreria
 
@@ -54,9 +54,46 @@ npm test
 
 ## Agregar una marca nueva
 
-1. Crear `packages/tokens/brands/<marca>.json` con la misma forma que `brand-a.json`.
+1. Crear `packages/tokens/brands/<marca>.json` con la misma forma que `nwt.json` (el campo `"brand"` interno define el nombre final, no el nombre del archivo).
 2. Correr `npm run tokens:build` (regenera el CSS, sin tocar componentes).
 3. Sumar la marca al selector de Storybook en `packages/ui/.storybook/preview.ts` (`globalTypes.brand.toolbar.items`).
+
+## Overrides de diseño por marca (cuando los tokens no alcanzan)
+
+Los tokens resuelven diferencias de **valor** (colores, spacing, radios). Cuando una marca necesita
+una diferencia de **forma o microinteracción** que no se puede expresar cambiando el valor de una
+variable existente (ej. botones pill-shaped con hover de escala, en vez de solo cambiar de color),
+se resuelve con un archivo de overrides CSS opcional junto al JSON de esa marca:
+
+```
+packages/tokens/brands/
+  qtz.json
+  qtz.overrides.css   # opcional — solo si esa marca lo necesita
+```
+
+El archivo es CSS normal, scoped a mano con el mismo atributo que ya usan los tokens (así la regla
+de marca gana por especificidad, sin `!important` ni depender del orden de carga):
+
+```css
+[data-brand="qtz"] .ui-button {
+  border-radius: 999px;
+}
+[data-brand="qtz"] .ui-button:hover:not(:disabled) {
+  transform: scale(1.03);
+}
+```
+
+`npm run tokens:build` lo detecta solo — si existe `<brand>.overrides.css`, lo suma al CSS generado
+de esa marca. No hace falta tocar el script, ni Storybook, ni los componentes.
+
+**Qué se puede overridear ahí, y qué no** (para que esto no termine en que cada marca reinventa
+cada componente):
+
+- ✅ Permitido: color, forma (`radius`/`border`), sombra, tipografía, transiciones/microinteracciones.
+- 🚫 No permitido: layout interno, agregar/quitar elementos, cambiar el slot API. Si una marca
+  necesita eso, es señal de que el **componente** necesita una prop nueva (ej.
+  `<Card :show-badge="...">`), revisada como cualquier cambio de API del componente — nunca un
+  parche CSS silencioso. La prop la usa quien consume la librería, no se activa sola "por marca".
 
 ## Agregar un componente nuevo
 
@@ -135,7 +172,7 @@ import { Button } from '@frontendlinx/ui'
 
 <template>
   <!-- data-brand activa el theming de esa marca en toda la app -->
-  <div data-brand="brand-a">
+  <div data-brand="nwt">
     <Button variant="primary">Continuar</Button>
   </div>
 </template>

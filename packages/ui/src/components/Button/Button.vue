@@ -6,11 +6,13 @@ withDefaults(
   defineProps<{
     variant?: Variant
     size?: Size
+    outlined?: boolean
     disabled?: boolean
   }>(),
   {
     variant: 'primary',
     size: 'md',
+    outlined: false,
     disabled: false,
   },
 )
@@ -19,7 +21,11 @@ withDefaults(
 <template>
   <button
     class="ui-button"
-    :class="[`ui-button--${variant}`, `ui-button--${size}`]"
+    :class="[
+      `ui-button--${variant}`,
+      `ui-button--${size}`,
+      { 'ui-button--outlined': outlined },
+    ]"
     :disabled="disabled"
   >
     <slot />
@@ -52,17 +58,40 @@ withDefaults(
 }
 
 .ui-button--secondary {
-  background: transparent;
-  color: var(--color-primary);
-  border: 1px solid var(--color-primary);
+  background: var(--color-secondary);
+  color: white;
 }
 .ui-button--secondary:hover:not(:disabled) {
-  background: var(--color-primary);
-  color: white;
+  filter: brightness(0.92);
 }
 
 .ui-button--danger {
   background: var(--color-danger);
+  color: white;
+}
+.ui-button--danger:hover:not(:disabled) {
+  filter: brightness(0.92);
+}
+
+/* outlined es un modificador aparte del variant (que color/significado tiene el boton);
+   "danger" queda siempre solido a proposito, por eso no tiene contraparte outlined. */
+.ui-button--outlined.ui-button--primary {
+  background: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+.ui-button--outlined.ui-button--primary:hover:not(:disabled) {
+  background: var(--color-primary);
+  color: white;
+}
+
+.ui-button--outlined.ui-button--secondary {
+  background: transparent;
+  color: var(--color-secondary);
+  border: 1px solid var(--color-secondary);
+}
+.ui-button--outlined.ui-button--secondary:hover:not(:disabled) {
+  background: var(--color-secondary);
   color: white;
 }
 

@@ -1,5 +1,5 @@
 {
-  "brand": "brand-b",
+  "brand": "ltk",
   "color": {
     "primary": "#0E9F6E",
     "primary-hover": "#0B7A55",
@@ -17,10 +17,17 @@
     "family-heading": "'Sora', sans-serif",
     "family-body": "'Nunito Sans', sans-serif"
   },
+  "fontWeight":{
+    "sm":"300",
+    "md":"400",
+    "lg":"700",
+    "xlg":"800"
+  },
   "radius": {
     "sm": "2px",
     "md": "6px",
-    "lg": "12px"
+    "lg": "12px",
+    "square":"0px"
   },
   "spacing": {
     "sm": "8px",

@@ -8,11 +8,13 @@ const meta = {
   argTypes: {
     variant: { control: 'select', options: ['primary', 'secondary', 'danger'] },
     size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    outlined: { control: 'boolean' },
     disabled: { control: 'boolean' },
   },
   args: {
     variant: 'primary',
     size: 'md',
+    outlined: false,
     disabled: false,
   },
 } satisfies Meta<typeof Button>
@@ -44,6 +46,18 @@ export const Danger: Story = {
     components: { Button },
     setup: () => ({ args }),
     template: `<Button v-bind="args">Eliminar</Button>`,
+  }),
+}
+
+export const Outlined: Story = {
+  render: () => ({
+    components: { Button },
+    template: `
+      <div style="display: flex; gap: 1rem; align-items: center;">
+        <Button variant="primary" outlined>Primary</Button>
+        <Button variant="secondary" outlined>Secondary</Button>
+      </div>
+    `,
   }),
 }
 

@@ -17,13 +17,14 @@ const preview: Preview = {
   globalTypes: {
     brand: {
       description: 'Marca activa',
-      defaultValue: 'brand-a',
+      defaultValue: 'nwt',
       toolbar: {
         title: 'Marca',
         icon: 'paintbrush',
         items: [
-          { value: 'brand-a', title: 'Brand A' },
-          { value: 'brand-b', title: 'Brand B' },
+          { value: 'nwt', title: 'NWT' },
+          { value: 'ltk', title: 'LTK' },
+          { value: 'qtz', title: 'QTZ' },
         ],
         dynamicTitle: true,
       },

@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { Button } from './index'
 
-const brand = ref<'brand-a' | 'brand-b'>('brand-a')
+const brand = ref<'nwt' | 'ltk' | 'qtz'>('nwt')
 </script>
 
 <template>
@@ -10,8 +10,9 @@ const brand = ref<'brand-a' | 'brand-b'>('brand-a')
     <label>
       Marca:
       <select v-model="brand">
-        <option value="brand-a">Brand A</option>
-        <option value="brand-b">Brand B</option>
+        <option value="nwt">NWT</option>
+        <option value="ltk">LTK</option>
+        <option value="qtz">QTZ</option>
       </select>
     </label>
 
