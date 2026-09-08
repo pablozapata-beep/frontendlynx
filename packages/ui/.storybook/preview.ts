@@ -34,8 +34,15 @@ const preview: Preview = {
   decorators: [
     (story, context) => ({
       components: { story },
-      setup: () => ({ brand: context.globals.brand }),
-      template: `<div :data-brand="brand" style="padding: 1.5rem"><story /></div>`,
+      setup: () => {
+        // data-brand va en <body>, no en un div interno: los componentes con
+        // Teleport (ej. Modal) mueven su contenido a ser hijo directo de <body>,
+        // fuera de cualquier wrapper. Si el atributo estuviera solo en un div
+        // interno, ese contenido teleportado quedaria fuera del scope
+        // `[data-brand="..."]` y perderia todas las variables CSS de tokens.
+        document.body.dataset.brand = context.globals.brand
+      },
+      template: `<div style="padding: 1.5rem"><story /></div>`,
     }),
   ],
 }

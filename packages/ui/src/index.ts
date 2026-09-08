@@ -10,3 +10,31 @@ export { default as Notification } from './components/Notification/Notification.
 export { default as NotificationsContainer } from './components/Notification/NotificationsContainer.vue'
 export { useNotifications } from './components/Notification/useNotifications'
 export type { NotificationVariant, NotificationItem } from './components/Notification/useNotifications'
+
+export { default as LotteryBallBadge } from './components/LotteryBallBadge/LotteryBallBadge.vue'
+export { default as NumberGrid } from './components/NumberGrid/NumberGrid.vue'
+export { default as QuantityStepper } from './components/QuantityStepper/QuantityStepper.vue'
+export { default as Modal } from './components/Modal/Modal.vue'
+
+export { default as JackpotCard } from './components/JackpotCard/JackpotCard.vue'
+export type {
+  LotteryBall,
+  MagicNumberConfig,
+  RangeGameConfig,
+  FixedGameConfig,
+  JackpotGame,
+} from './components/JackpotCard/types'
+
+export { default as TicketPicker } from './components/TicketPicker/TicketPicker.vue'
+export { DEFAULT_DRAW_DURATION_OPTIONS, DEFAULT_TICKET_PICKER_COPY } from './components/TicketPicker/types'
+export type {
+  PickerMode,
+  FixedFlowOptionId,
+  TicketLine,
+  MagicBet,
+  DrawDurationOption,
+  RangeTicketPayload,
+  FixedTicketPayload,
+  Ticket,
+  TicketPickerCopy,
+} from './components/TicketPicker/types'

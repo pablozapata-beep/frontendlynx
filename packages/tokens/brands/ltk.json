@@ -14,8 +14,8 @@
     "surface": "#F3F5F1"
   },
   "font": {
-    "family-heading": "'Sora', sans-serif",
-    "family-body": "'Nunito Sans', sans-serif"
+    "family-heading": "'Albert Sans', sans-serif",
+    "family-body": "'Albert Sans', sans-serif"
   },
   "fontWeight":{
     "sm":"300",

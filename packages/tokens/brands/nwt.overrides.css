@@ -1,0 +1,11 @@
+:root {
+    --product-card-bg:linear-gradient(0deg,black 0%,#171717 16%,black 45%,black 82%,#1c1c1c 100%);
+    --product-card-bg-hover:linear-gradient(-180deg,black 0%,#171717 16%,black 45%,black 82%,#1c1c1c 100%);
+}
+
+[data-brand="nwt"] .ui-card.ui-jackpot-card {
+    background: var(--product-card-bg);
+    &:hover {
+        background: var(--product-card-bg-hover);
+    }
+}

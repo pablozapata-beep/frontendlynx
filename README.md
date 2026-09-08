@@ -109,8 +109,15 @@ Seguir el patron de `packages/ui/src/components/Button/`:
 
 Para estado compartido entre componentes (ej. una cola de notificaciones), usar un composable con
 estado en closure (ver `Notification/useNotifications.ts`) o `provide`/`inject` para compound
-components (ej. `Carousel` + `CarouselSlide`) — no Pinia, para no forzarle esa dependencia a quien
-consuma la libreria.
+components (ej. `Carousel` + `CarouselSlide`, o el arbol mas profundo de `TicketPicker` — un
+composable factory `createXState()` instanciado una vez por componente y proveido a los hijos, ver
+`TicketPicker/useTicketPickerState.ts`) — no Pinia, para no forzarle esa dependencia a quien consuma
+la libreria.
+
+Si un componente necesita muchos strings de copy overrideables (mas de ~6-8, donde listarlos como
+props flat se vuelve incomodo), se aparta la convencion de props flat y se agrupa en un solo prop
+`copy?: Partial<XCopy>` con un `DEFAULT_X_COPY` exportado (ver `TicketPicker/types.ts`) — mas facil
+de swapear entero para i18n que 20 props sueltos.
 
 ## Flujo de trabajo
 
@@ -177,3 +184,47 @@ import { Button } from '@frontendlinx/ui'
   </div>
 </template>
 ```
+
+**Importante si usas componentes con `Teleport` (`Modal`, `TicketPicker`):** su contenido se
+monta como hijo directo de `<body>`, no dentro de tu `<div data-brand="...">`. Como las variables
+CSS de los tokens se heredan por el arbol real del DOM, un `data-brand` puesto solo en un div
+interno no llega a ese contenido teleportado (se ve sin estilos de marca). Poné el atributo en
+`<html>` o `<body>` en vez de un wrapper interno:
+
+```js
+// una vez, al elegir/cambiar de marca en tu app
+document.documentElement.dataset.brand = 'nwt'
+```
+
+```html
+<html data-brand="nwt">
+```
+
+### Tipografias
+
+Los tokens solo declaran el nombre de la fuente (`--font-family-body`, etc.) — la libreria **no
+inyecta requests externos a Google Fonts por su cuenta** en la app que la consume (cada app decide
+si usa Google Fonts, un CDN propio, o fuentes autohospedadas). Cada app consumidora tiene que cargar
+la tipografia de su marca. Fuentes actuales por marca (Google Fonts):
+
+| Marca | Fuente |
+| --- | --- |
+| NWT | [Lato](https://fonts.google.com/specimen/Lato) |
+| LTK | [Albert Sans](https://fonts.google.com/specimen/Albert+Sans) |
+| QTZ | [Outfit](https://fonts.google.com/specimen/Outfit) (titulos) + [Work Sans](https://fonts.google.com/specimen/Work+Sans) (texto) |
+
+Ejemplo de carga vía Google Fonts (ajustar a las marcas que use cada app):
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap"
+  rel="stylesheet"
+/>
+```
+
+Storybook y el sandbox de dev (`packages/ui`) sí cargan todas las fuentes de las 3 marcas
+actuales (ver `.storybook/preview-head.html` e `index.html`) para que el catalogo se vea con la
+tipografia real — si tenes `npm run storybook` corriendo, reiniciá el proceso después de tocar
+`preview-head.html`, ese archivo se lee una sola vez al arrancar el servidor, no tiene hot-reload.

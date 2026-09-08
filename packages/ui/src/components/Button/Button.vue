@@ -52,6 +52,7 @@ withDefaults(
 .ui-button--primary {
   background: var(--color-primary);
   color: white;
+ 
 }
 .ui-button--primary:hover:not(:disabled) {
   background: var(--color-primary-hover);

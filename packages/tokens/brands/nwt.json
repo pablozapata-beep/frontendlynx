@@ -14,8 +14,8 @@
     "surface": "#F7F8FA"
   },
   "font": {
-    "family-heading": "'Poppins', sans-serif",
-    "family-body": "'Inter', sans-serif"
+    "family-heading": "'Lato', sans-serif",
+    "family-body": "'Lato', sans-serif"
   },
   "fontWeight":{
     "sm":"300",
