@@ -31,4 +31,38 @@ describe('LotteryBallBadge', () => {
     })
     expect(wrapper.classes()).toContain('ui-lottery-ball--sm')
   })
+
+  it('renderiza el logo cuando se pasa logoUrl, en vez del label', () => {
+    const wrapper = mount(LotteryBallBadge, {
+      props: {
+        label: 'PB',
+        background: '#E4002B',
+        logoUrl: 'https://d3tmfelegj51yl.cloudfront.net/lotto-logos/wt/3.png',
+      },
+    })
+    const img = wrapper.find('img.ui-lottery-ball__logo')
+    expect(img.exists()).toBe(true)
+    expect(img.attributes('src')).toBe('https://d3tmfelegj51yl.cloudfront.net/lotto-logos/wt/3.png')
+    expect(img.attributes('alt')).toBe('PB')
+    expect(wrapper.text()).toBe('')
+  })
+
+  it('vuelve a mostrar el label si la imagen del logo falla al cargar', async () => {
+    const wrapper = mount(LotteryBallBadge, {
+      props: {
+        label: 'PB',
+        background: '#E4002B',
+        logoUrl: 'https://d3tmfelegj51yl.cloudfront.net/lotto-logos/wt/roto.png',
+      },
+    })
+    await wrapper.find('img.ui-lottery-ball__logo').trigger('error')
+    expect(wrapper.find('img.ui-lottery-ball__logo').exists()).toBe(false)
+    expect(wrapper.text()).toBe('PB')
+  })
+
+  it('sin logoUrl muestra el label como antes', () => {
+    const wrapper = mount(LotteryBallBadge, { props: { label: 'PB', background: '#E4002B' } })
+    expect(wrapper.find('img.ui-lottery-ball__logo').exists()).toBe(false)
+    expect(wrapper.text()).toBe('PB')
+  })
 })

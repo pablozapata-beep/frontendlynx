@@ -6,7 +6,14 @@ const powerball: JackpotGame = {
   id: 'powerball',
   name: 'Powerball',
   region: 'Estados Unidos',
-  balls: [{ id: 'pb', label: 'PB', background: '#E4002B' }],
+  balls: [
+    {
+      id: 'pb',
+      label: 'PB',
+      background: '#E4002B',
+      logoUrl: 'https://d3tmfelegj51yl.cloudfront.net/lotto-logos/wt/3.png',
+    },
+  ],
   jackpotAmount: 350_000_000,
   hot: true,
   price: 3,

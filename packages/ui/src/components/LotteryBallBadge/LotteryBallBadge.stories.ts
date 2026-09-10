@@ -10,6 +10,7 @@ const meta = {
     background: { control: 'color' },
     color: { control: 'color' },
     size: { control: 'select', options: ['sm', 'md'] },
+    logoUrl: { control: 'text' },
   },
   args: {
     label: 'PB',
@@ -40,4 +41,48 @@ export const MultipleBallsRow: Story = {
       </div>
     `,
   }),
+}
+
+export const WithRealLogo: Story = {
+  args: {
+    label: 'PB',
+    background: '#E4002B',
+    logoUrl: 'https://d3tmfelegj51yl.cloudfront.net/lotto-logos/wt/3.png',
+  },
+}
+
+export const RealLogoByBrand: Story = {
+  name: 'Logo real por marca (NWT vs LTK)',
+  render: () => ({
+    components: { LotteryBallBadge },
+    template: `
+      <div style="display: flex; gap: 1.5rem; align-items: center;">
+        <div style="text-align: center;">
+          <LotteryBallBadge
+            label="PB"
+            background="#E4002B"
+            logoUrl="https://d3tmfelegj51yl.cloudfront.net/lotto-logos/wt/3.png"
+          />
+          <p style="font-size: 11px; margin-top: 4px;">nwt</p>
+        </div>
+        <div style="text-align: center;">
+          <LotteryBallBadge
+            label="PB"
+            background="#E4002B"
+            logoUrl="https://d3tmfelegj51yl.cloudfront.net/lotto-logos/ltk/3.png"
+          />
+          <p style="font-size: 11px; margin-top: 4px;">ltk</p>
+        </div>
+      </div>
+    `,
+  }),
+}
+
+export const LogoFallback: Story = {
+  name: 'Fallback a label si el logo falla',
+  args: {
+    label: 'PB',
+    background: '#E4002B',
+    logoUrl: 'https://d3tmfelegj51yl.cloudfront.net/lotto-logos/wt/does-not-exist.png',
+  },
 }

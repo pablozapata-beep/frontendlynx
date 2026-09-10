@@ -3,6 +3,8 @@ export interface LotteryBall {
   label: string
   background: string
   color?: string
+  /** URL del logo real de la loteria (ej. CloudFront, distinta por marca). Si falla o no se pasa, se usa label+background. */
+  logoUrl?: string
 }
 
 export interface MagicNumberConfig {
