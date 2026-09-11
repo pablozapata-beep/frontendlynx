@@ -1,0 +1,11 @@
+/*
+  .ui-button y .ui-button--<variant> siempre estan juntos en el mismo elemento
+  (ver Button.vue), asi que encadenarlos suma especificidad real (0,3,0) y le
+  gana de forma determinista al .ui-button[data-v-xxx] del componente (0,2,0),
+  sin necesitar !important ni depender del orden de carga de los estilos.
+*/
+[data-brand="ltk"] .ui-button.ui-button--primary,
+[data-brand="ltk"] .ui-button.ui-button--secondary,
+[data-brand="ltk"] .ui-button.ui-button--danger {
+    border-radius: 0px;
+}

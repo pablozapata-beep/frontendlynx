@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, inject } from 'vue'
 import QuantityStepper from '../QuantityStepper/QuantityStepper.vue'
-import PillToggleGroup from './PillToggleGroup.vue'
+import PillToggleGroup from '../PillToggleGroup/PillToggleGroup.vue'
 import ManualLineBuilder from './ManualLineBuilder.vue'
 import TicketLinesList from './TicketLinesList.vue'
 import MagicNumberPanel from './MagicNumberPanel.vue'

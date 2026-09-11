@@ -3,12 +3,12 @@
   "color": {
     "primary": "#5fb602",
     "primary-hover": "#6dd202",
-    "secondary": "#FF6B35",
+    "secondary": "#F40",
     "background": "#FFFFFF",
     "text": "#1A1A1A",
     "danger": "#ea4c2b",
     "success": "#5fb602",
-    "warning": "#f3c43b",
+    "warning": "#F40",
     "info": "#2563EB",
     "border": "#E5E7EB",
     "surface": "#F7F8FA"

@@ -1,4 +1,5 @@
 :root {
+    --green:#5fb602;
     --product-card-bg:linear-gradient(0deg,black 0%,#171717 16%,black 45%,black 82%,#1c1c1c 100%);
     --product-card-bg-hover:linear-gradient(-180deg,black 0%,#171717 16%,black 45%,black 82%,#1c1c1c 100%);
 }
@@ -7,5 +8,16 @@
     background: var(--product-card-bg);
     &:hover {
         background: var(--product-card-bg-hover);
+    }
+}
+
+[data-brand="nwt"] .ui-card {
+    border-radius: 8px;
+    border:1px solid #E5E7EB;
+}
+
+[data-brand="nwt"] .ui-accordion-item__content {
+    a {
+        color:var(--green);
     }
 }
