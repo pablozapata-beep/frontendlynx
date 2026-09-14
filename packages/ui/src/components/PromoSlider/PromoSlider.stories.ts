@@ -15,12 +15,14 @@ const meta = {
   argTypes: {
     showArrows: { control: 'boolean' },
     showDots: { control: 'boolean' },
+    loop: { control: 'boolean' },
     autoplay: { control: 'boolean' },
     autoplayInterval: { control: 'number' },
   },
   args: {
     showArrows: true,
     showDots: true,
+    loop: true,
     autoplay: true,
     autoplayInterval: 6000,
   },
@@ -70,6 +72,16 @@ export const Libre: Story = {
 export const SinFlechasNiDots: Story = {
   name: 'Sin flechas ni dots (solo autoplay)',
   args: { images: IMAGES, showArrows: false, showDots: false },
+  render: (args) => ({
+    components: { PromoSlider },
+    setup: () => ({ args }),
+    template: `<div style="max-width: 48rem;"><PromoSlider v-bind="args" /></div>`,
+  }),
+}
+
+export const SinLoop: Story = {
+  name: 'Sin loop (flechas desaparecen en los extremos)',
+  args: { images: IMAGES, loop: false, autoplay: false },
   render: (args) => ({
     components: { PromoSlider },
     setup: () => ({ args }),

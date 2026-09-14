@@ -14,6 +14,8 @@ const props = withDefaults(
     images?: PromoSliderImage[]
     showArrows?: boolean
     showDots?: boolean
+    /** Si es false, no da la vuelta: la flecha/autoplay desaparece/se frena en cada extremo. */
+    loop?: boolean
     autoplay?: boolean
     autoplayInterval?: number
     pauseOnHover?: boolean
@@ -30,6 +32,7 @@ const props = withDefaults(
     images: undefined,
     showArrows: true,
     showDots: true,
+    loop: true,
     autoplay: true,
     autoplayInterval: 6000,
     pauseOnHover: true,
@@ -54,7 +57,9 @@ const effectiveMobileAspectRatio = computed(() => props.mobileAspectRatio ?? pro
 
 function goTo(index: number) {
   if (slideCount.value === 0) return
-  current.value = ((index % slideCount.value) + slideCount.value) % slideCount.value
+  current.value = props.loop
+    ? ((index % slideCount.value) + slideCount.value) % slideCount.value
+    : Math.min(slideCount.value - 1, Math.max(0, index))
   emit('change', current.value)
 }
 function next() {
@@ -63,6 +68,9 @@ function next() {
 function prev() {
   goTo(current.value - 1)
 }
+
+const canGoPrev = computed(() => props.loop || current.value > 0)
+const canGoNext = computed(() => props.loop || current.value < slideCount.value - 1)
 
 let intervalId: ReturnType<typeof setInterval> | undefined
 
@@ -155,16 +163,16 @@ defineExpose({ goTo, next, prev, current })
       :aria-label="ariaLabel"
       @mouseenter="onMouseEnter"
       @mouseleave="onMouseLeave"
-      @pointerdown="onPointerDown"
-      @pointermove="onPointerMove"
-      @pointerup="endDrag"
-      @pointercancel="endDrag"
-      @click.capture="onTrackClickCapture"
     >
       <div
         class="ui-promo-slider__track"
         :class="{ 'ui-promo-slider__track--dragging': isDragging }"
         :style="{ transform: trackTransform }"
+        @pointerdown="onPointerDown"
+        @pointermove="onPointerMove"
+        @pointerup="endDrag"
+        @pointercancel="endDrag"
+        @click.capture="onTrackClickCapture"
       >
         <template v-if="images">
           <PromoSliderSlide v-for="(image, index) in images" :key="index" :label="image.alt">
@@ -178,7 +186,7 @@ defineExpose({ goTo, next, prev, current })
       </div>
 
       <button
-        v-if="showArrows && slideCount > 1"
+        v-if="showArrows && slideCount > 1 && canGoPrev"
         type="button"
         class="ui-promo-slider__arrow ui-promo-slider__arrow--prev"
         :aria-label="prevLabel"
@@ -187,7 +195,7 @@ defineExpose({ goTo, next, prev, current })
         ‹
       </button>
       <button
-        v-if="showArrows && slideCount > 1"
+        v-if="showArrows && slideCount > 1 && canGoNext"
         type="button"
         class="ui-promo-slider__arrow ui-promo-slider__arrow--next"
         :aria-label="nextLabel"

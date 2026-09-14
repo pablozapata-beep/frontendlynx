@@ -22,6 +22,9 @@ export { default as ProgressMeter } from './components/ProgressMeter/ProgressMet
 export { default as PromoSlider } from './components/PromoSlider/PromoSlider.vue'
 export { default as PromoSliderSlide } from './components/PromoSlider/PromoSliderSlide.vue'
 export type { PromoSliderImage } from './components/PromoSlider/PromoSlider.vue'
+export { default as StatusIcon } from './components/StatusIcon/StatusIcon.vue'
+export { default as Spinner } from './components/Spinner/Spinner.vue'
+export { default as LoadingBar } from './components/LoadingBar/LoadingBar.vue'
 
 export { default as JackpotCard } from './components/JackpotCard/JackpotCard.vue'
 export type {
