@@ -19,6 +19,9 @@ export { default as Accordion } from './components/Accordion/Accordion.vue'
 export { default as AccordionItem } from './components/Accordion/AccordionItem.vue'
 export { default as PillToggleGroup } from './components/PillToggleGroup/PillToggleGroup.vue'
 export { default as ProgressMeter } from './components/ProgressMeter/ProgressMeter.vue'
+export { default as PromoSlider } from './components/PromoSlider/PromoSlider.vue'
+export { default as PromoSliderSlide } from './components/PromoSlider/PromoSliderSlide.vue'
+export type { PromoSliderImage } from './components/PromoSlider/PromoSlider.vue'
 
 export { default as JackpotCard } from './components/JackpotCard/JackpotCard.vue'
 export type {
