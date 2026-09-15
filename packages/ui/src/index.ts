@@ -25,6 +25,9 @@ export type { PromoSliderImage } from './components/PromoSlider/PromoSlider.vue'
 export { default as StatusIcon } from './components/StatusIcon/StatusIcon.vue'
 export { default as Spinner } from './components/Spinner/Spinner.vue'
 export { default as LoadingBar } from './components/LoadingBar/LoadingBar.vue'
+export { default as StepList } from './components/StepList/StepList.vue'
+export type { StepItem } from './components/StepList/types'
+export { default as StatCard } from './components/StatCard/StatCard.vue'
 
 export { default as JackpotCard } from './components/JackpotCard/JackpotCard.vue'
 export type {
