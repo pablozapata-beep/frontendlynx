@@ -37,3 +37,28 @@ export const PorExpirar: Story = {
     label: 'Termina en',
   },
 }
+
+export const Minimal: Story = {
+  name: 'Variante minimal',
+  args: {
+    target: inMs(2 * 86_400_000 + 11 * 3_600_000 + 15 * 60_000 + 33_000),
+    variant: 'minimal',
+  },
+}
+
+export const MinimalConLabel: Story = {
+  name: 'Variante minimal con label',
+  args: {
+    target: inMs(9 * 3_600_000 + 36 * 60_000 + 33_000),
+    variant: 'minimal',
+    label: 'Cierra en',
+  },
+}
+
+export const MinimalMenosDeUnDia: Story = {
+  name: 'Variante minimal — menos de un día (sin prefijo de días)',
+  args: {
+    target: inMs(9 * 3_600_000 + 12 * 60_000 + 33_000),
+    variant: 'minimal',
+  },
+}

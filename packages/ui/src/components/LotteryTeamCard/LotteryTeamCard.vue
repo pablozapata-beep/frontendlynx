@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import Card from '../Card/Card.vue'
 import LotteryBallBadge from '../LotteryBallBadge/LotteryBallBadge.vue'
 import PillToggleGroup from '../PillToggleGroup/PillToggleGroup.vue'
 import ProgressMeter from '../ProgressMeter/ProgressMeter.vue'
 import Pill from '../Pill/Pill.vue'
 import Button from '../Button/Button.vue'
-import { useRemainingLabel } from './useRemainingLabel'
+import Countdown from '../Countdown/Countdown.vue'
 import type { LotteryGroup } from './types'
 
 const props = withDefaults(
@@ -103,7 +103,13 @@ const footerText = computed(() => {
   return `${props.minPendingPrefixLabel} ${missing} ${props.minPendingSuffixLabel}`
 })
 
-const remainingLabel = useRemainingLabel(computed(() => activeOption.value.nextDrawDate))
+const isDrawExpired = ref(false)
+watch(
+  () => activeOption.value.nextDrawDate,
+  () => {
+    isDrawExpired.value = false
+  },
+)
 
 function onJoinClick() {
   emit('join', { group: props.group, optionIndex: selectedOptionIndex.value })
@@ -136,8 +142,14 @@ function onMoreInfoClick() {
       <span class="ui-lottery-team-card__chances">
         <strong>{{ group.total }}</strong> {{ chancesLabel }}
       </span>
-      <span v-if="remainingLabel" class="ui-lottery-team-card__countdown">
-        {{ closesInPrefixLabel }} {{ remainingLabel }}
+      <span v-if="activeOption.nextDrawDate && !isDrawExpired" class="ui-lottery-team-card__countdown">
+        {{ closesInPrefixLabel }}
+        <Countdown
+          :key="String(activeOption.nextDrawDate)"
+          variant="minimal"
+          :target="activeOption.nextDrawDate"
+          @expire="isDrawExpired = true"
+        />
       </span>
       <span v-else-if="activeOption.nextDrawDate" class="ui-lottery-team-card__countdown ui-lottery-team-card__countdown--closed">
         {{ closedLabel }}
@@ -276,9 +288,17 @@ function onMoreInfoClick() {
   font-weight: 700;
 }
 .ui-lottery-team-card__countdown {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
   white-space: nowrap;
   opacity: 1;
   color: var(--color-primary);
+}
+.ui-lottery-team-card__countdown :deep(.ui-countdown__value) {
+  font-size: inherit;
+  font-weight: 700;
+  color: inherit;
 }
 .ui-lottery-team-card__countdown--closed {
   color: var(--color-text);

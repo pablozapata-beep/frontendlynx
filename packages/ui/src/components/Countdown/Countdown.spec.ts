@@ -63,4 +63,49 @@ describe('Countdown', () => {
     await wrapper.vm.$nextTick()
     expect(wrapper.emitted('expire')).toHaveLength(1)
   })
+
+  describe('variant="minimal"', () => {
+    it('muestra HH:MM:SS sin dias cuando falta menos de un dia', () => {
+      const target = Date.now() + (9 * 3600 + 36 * 60 + 33) * 1000
+      const wrapper = mount(Countdown, { props: { target, variant: 'minimal' } })
+      expect(wrapper.find('.ui-countdown__value').text()).toBe('09:36:33')
+      expect(wrapper.find('.ui-countdown__tile').exists()).toBe(false)
+    })
+
+    it('antepone "N Días" cuando falta un dia o mas, con pluralizacion', () => {
+      const twoDays = Date.now() + (2 * 86400 + 11 * 3600 + 15 * 60 + 33) * 1000
+      const wrapper = mount(Countdown, { props: { target: twoDays, variant: 'minimal' } })
+      expect(wrapper.find('.ui-countdown__value').text()).toBe('2 Días 11:15:33')
+
+      const oneDay = Date.now() + (1 * 86400 + 8 * 3600 + 15 * 60 + 0) * 1000
+      const singular = mount(Countdown, { props: { target: oneDay, variant: 'minimal' } })
+      expect(singular.find('.ui-countdown__value').text()).toBe('1 Día 08:15:00')
+    })
+
+    it('respeta formatDays custom', () => {
+      const target = Date.now() + (3 * 86400 * 1000 + 1000)
+      const wrapper = mount(Countdown, {
+        props: { target, variant: 'minimal', formatDays: (d: number) => `d${d}` },
+      })
+      expect(wrapper.find('.ui-countdown__value').text()).toContain('3 d3')
+    })
+
+    it('se sigue actualizando cada segundo y emitiendo expire igual que la variante tiles', async () => {
+      const target = Date.now() + 1000
+      const wrapper = mount(Countdown, { props: { target, variant: 'minimal' } })
+      expect(wrapper.find('.ui-countdown__value').text()).toBe('00:00:01')
+
+      await vi.advanceTimersByTimeAsync(1000)
+      await wrapper.vm.$nextTick()
+      expect(wrapper.find('.ui-countdown__value').text()).toBe('00:00:00')
+      expect(wrapper.emitted('expire')).toHaveLength(1)
+    })
+
+    it('muestra el label arriba del valor, igual que en la variante tiles', () => {
+      const wrapper = mount(Countdown, {
+        props: { target: Date.now() + 60_000, variant: 'minimal', label: 'Cierra en' },
+      })
+      expect(wrapper.find('.ui-countdown__label').text()).toBe('Cierra en')
+    })
+  })
 })

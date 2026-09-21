@@ -76,6 +76,37 @@ describe('LotteryTeamPickerModal', () => {
     expect(wrapper.emitted('close')).toHaveLength(1)
   })
 
+  it('sin nextDrawDate no muestra countdown ni el label de cerrado', () => {
+    mount(LotteryTeamPickerModal, { props: { open: true, group: baseGroup, optionIndex: 0 } })
+    expect(document.querySelector('.ui-lottery-team-picker-modal__countdown')).toBeNull()
+  })
+
+  it('muestra el countdown minimal cuando la opcion tiene nextDrawDate', () => {
+    const withDraw = {
+      ...baseGroup,
+      options: [{ ...baseGroup.options[0], nextDrawDate: Date.now() + (9 * 3600 + 36 * 60 + 33) * 1000 }],
+    }
+    mount(LotteryTeamPickerModal, { props: { open: true, group: withDraw, optionIndex: 0 } })
+    expect(document.querySelector('.ui-lottery-team-picker-modal__countdown')!.textContent).toBe(
+      'Cierra en 09:36:33',
+    )
+  })
+
+  it('al expirar el countdown pasa a mostrar el label de cerrado', async () => {
+    const withDraw = {
+      ...baseGroup,
+      options: [{ ...baseGroup.options[0], nextDrawDate: Date.now() + 1000 }],
+    }
+    mount(LotteryTeamPickerModal, { props: { open: true, group: withDraw, optionIndex: 0 } })
+
+    await vi.advanceTimersByTimeAsync(1000)
+    await nextTick()
+
+    expect(document.querySelector('.ui-lottery-team-picker-modal__countdown--closed')!.textContent).toBe(
+      'Grupo Cerrado',
+    )
+  })
+
   it('reabrir el modal resetea cantidad y el estado de agregado', async () => {
     const wrapper = mount(LotteryTeamPickerModal, {
       props: { open: true, group: baseGroup, optionIndex: 0 },

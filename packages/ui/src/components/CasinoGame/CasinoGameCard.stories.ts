@@ -41,7 +41,14 @@ export const Grilla: Story = {
   render: () => ({
     components: { CasinoGameCard },
     template: `
-      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap: 1.5rem; max-width: 50rem;">
+      <!--
+        padding-top en el contenedor, no en la card: la pill de jackpot
+        sobresale hacia arriba con overflow:visible, pero la card en si
+        nunca se corre — así queda alineada con sus hermanas sin jackpot.
+        Si hay una fila arriba, el gap ya suele alcanzar; para la primera
+        fila (como aca) conviene un poco de padding-top en el contenedor.
+      -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap: 1.5rem; max-width: 50rem; padding-top: 1rem;">
         <CasinoGameCard image="https://static.trllnhelp.com/site/images_v4/casino-games/game-img/1182.webp" title="4 Dragon Kings" />
         <CasinoGameCard image="https://static.trllnhelp.com/site/images_v4/casino-games/game-img/968.webp" title="40 Dice Fire" :jackpot-amount="1098618.51" />
         <CasinoGameCard image="https://static.trllnhelp.com/site/images_v4/casino-games/game-img/4035.webp" title="Plinko" />

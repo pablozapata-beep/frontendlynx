@@ -86,6 +86,54 @@ describe('LotteryTeamCard', () => {
     expect(wrapper.emitted('join')?.[0]).toEqual([{ group: baseGroup, optionIndex: 1 }])
   })
 
+  it('sin nextDrawDate no muestra countdown ni el label de cerrado', () => {
+    const wrapper = mount(LotteryTeamCard, { props: { group: baseGroup } })
+    expect(wrapper.find('.ui-lottery-team-card__countdown').exists()).toBe(false)
+  })
+
+  it('muestra el countdown minimal cuando la opcion activa tiene nextDrawDate', () => {
+    const withDraw = {
+      ...baseGroup,
+      options: [{ ...baseGroup.options[0], nextDrawDate: Date.now() + (9 * 3600 + 36 * 60 + 33) * 1000 }],
+    }
+    const wrapper = mount(LotteryTeamCard, { props: { group: withDraw } })
+    expect(wrapper.find('.ui-lottery-team-card__countdown').text()).toBe('Cierra en 09:36:33')
+  })
+
+  it('al expirar el countdown pasa a mostrar el label de cerrado', async () => {
+    const withDraw = {
+      ...baseGroup,
+      options: [{ ...baseGroup.options[0], nextDrawDate: Date.now() + 1000 }],
+    }
+    const wrapper = mount(LotteryTeamCard, { props: { group: withDraw } })
+
+    await vi.advanceTimersByTimeAsync(1000)
+    await wrapper.vm.$nextTick()
+
+    expect(wrapper.find('.ui-lottery-team-card__countdown--closed').text()).toBe('Grupo Cerrado')
+  })
+
+  it('al cambiar de opcion, el countdown se resetea para la nueva fecha', async () => {
+    const withDraw = {
+      ...baseGroup,
+      options: [
+        { ...baseGroup.options[0], nextDrawDate: Date.now() + 1000 },
+        { ...baseGroup.options[1], nextDrawDate: Date.now() + (2 * 3600 + 5 * 60) * 1000 },
+      ],
+    }
+    const wrapper = mount(LotteryTeamCard, { props: { group: withDraw } })
+
+    await vi.advanceTimersByTimeAsync(1000)
+    await wrapper.vm.$nextTick()
+    expect(wrapper.find('.ui-lottery-team-card__countdown--closed').exists()).toBe(true)
+
+    await wrapper.findAll('.ui-pill-toggle-group__pill')[1].trigger('click')
+    expect(wrapper.find('.ui-lottery-team-card__countdown--closed').exists()).toBe(false)
+    // 02:05:00 menos el segundo que ya avanzamos con vi.advanceTimersByTimeAsync arriba
+    // (ambas fechas se calcularon relativas al mismo "ahora" inicial).
+    expect(wrapper.find('.ui-lottery-team-card__countdown').text()).toBe('Cierra en 02:04:59')
+  })
+
   it('emite moreInfo al clickear el link, solo si hay partialPath', () => {
     const withLink = mount(LotteryTeamCard, { props: { group: baseGroup } })
     expect(withLink.find('.ui-lottery-team-card__more-info').exists()).toBe(true)

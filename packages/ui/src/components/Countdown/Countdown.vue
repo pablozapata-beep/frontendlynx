@@ -4,18 +4,24 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 const props = withDefaults(
   defineProps<{
     target: Date | number | string
+    /** 'tiles': el clasico con recuadros por unidad. 'minimal': una linea de texto tipo "2 Días 11:15:33". */
+    variant?: 'tiles' | 'minimal'
     label?: string
     dayLabel?: string
     hourLabel?: string
     minuteLabel?: string
     secondLabel?: string
+    /** Solo variant="minimal": palabra "Día"/"Días" segun corresponda. */
+    formatDays?: (days: number) => string
   }>(),
   {
+    variant: 'tiles',
     label: undefined,
     dayLabel: 'd',
     hourLabel: 'h',
     minuteLabel: 'm',
     secondLabel: 's',
+    formatDays: (days: number) => (days === 1 ? 'Día' : 'Días'),
   },
 )
 
@@ -32,6 +38,11 @@ const minutes = computed(() => Math.floor((remainingMs.value % 3_600_000) / 60_0
 const seconds = computed(() => Math.floor((remainingMs.value % 60_000) / 1000))
 
 const pad = (n: number) => String(n).padStart(2, '0')
+
+const minimalText = computed(() => {
+  const time = `${pad(hours.value)}:${pad(minutes.value)}:${pad(seconds.value)}`
+  return days.value > 0 ? `${days.value} ${props.formatDays(days.value)} ${time}` : time
+})
 
 let intervalId: ReturnType<typeof setInterval> | undefined
 let expired = false
@@ -66,7 +77,10 @@ onBeforeUnmount(() => {
 <template>
   <div class="ui-countdown" role="timer" aria-live="polite">
     <p v-if="label" class="ui-countdown__label">{{ label }}</p>
-    <div class="ui-countdown__row">
+
+    <p v-if="variant === 'minimal'" class="ui-countdown__value">{{ minimalText }}</p>
+
+    <div v-else class="ui-countdown__row">
       <div class="ui-countdown__group">
         <span :key="`d-${days}`" class="ui-countdown__tile">{{ pad(days) }}</span>
         <span class="ui-countdown__suffix">{{ dayLabel }}</span>
@@ -97,6 +111,14 @@ onBeforeUnmount(() => {
   font-size: 13px;
   opacity: 0.65;
   margin: 0 0 var(--spacing-sm);
+}
+
+.ui-countdown__value {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--color-text);
 }
 
 .ui-countdown__row {

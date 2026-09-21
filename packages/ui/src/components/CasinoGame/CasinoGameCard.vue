@@ -95,7 +95,11 @@ const formattedPlayers = computed(() => {
   transition: transform 0.15s ease;
 }
 .ui-casino-game-card--with-jackpot {
-  margin-top: var(--spacing-md);
+  /* La pill sobresale hacia arriba (ver .ui-casino-game-card__jackpot) — se
+     resuelve dejando overflow visible, nunca corriendo la card con margin:
+     eso la desalinearia respecto a sus hermanas sin jackpot en un grid/fila.
+     El espacio para que la pill no quede pegada al elemento de arriba lo
+     tiene que dar el layout que arma el grid (gap o padding-top), no la card. */
   overflow: visible;
 }
 .ui-casino-game-card--badge:hover {

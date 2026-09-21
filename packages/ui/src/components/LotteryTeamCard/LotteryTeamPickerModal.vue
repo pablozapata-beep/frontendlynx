@@ -4,7 +4,7 @@ import Modal from '../Modal/Modal.vue'
 import Button from '../Button/Button.vue'
 import LotteryBallBadge from '../LotteryBallBadge/LotteryBallBadge.vue'
 import QuantityStepper from '../QuantityStepper/QuantityStepper.vue'
-import { useRemainingLabel } from './useRemainingLabel'
+import Countdown from '../Countdown/Countdown.vue'
 import type { LotteryGroup } from './types'
 
 const props = withDefaults(
@@ -43,7 +43,14 @@ const emit = defineEmits<{
 }>()
 
 const option = computed(() => props.group?.options[props.optionIndex])
-const remainingLabel = useRemainingLabel(computed(() => option.value?.nextDrawDate))
+
+const isDrawExpired = ref(false)
+watch(
+  () => option.value?.nextDrawDate,
+  () => {
+    isDrawExpired.value = false
+  },
+)
 
 const maxQuantity = computed(() => {
   if (!props.group || !option.value) return 10
@@ -99,8 +106,14 @@ function confirmAddToCart() {
         <span class="ui-lottery-team-picker-modal__chances">
           <strong>{{ group.total }}</strong> {{ chancesLabel }}
         </span>
-        <span v-if="remainingLabel" class="ui-lottery-team-picker-modal__countdown">
-          {{ closesInPrefixLabel }} {{ remainingLabel }}
+        <span v-if="option.nextDrawDate && !isDrawExpired" class="ui-lottery-team-picker-modal__countdown">
+          {{ closesInPrefixLabel }}
+          <Countdown
+            :key="String(option.nextDrawDate)"
+            variant="minimal"
+            :target="option.nextDrawDate"
+            @expire="isDrawExpired = true"
+          />
         </span>
         <span v-else-if="option.nextDrawDate" class="ui-lottery-team-picker-modal__countdown ui-lottery-team-picker-modal__countdown--closed">
           {{ closedLabel }}
@@ -202,8 +215,16 @@ function confirmAddToCart() {
   font-weight: 700;
 }
 .ui-lottery-team-picker-modal__countdown {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
   color: var(--color-primary);
   white-space: nowrap;
+}
+.ui-lottery-team-picker-modal__countdown :deep(.ui-countdown__value) {
+  font-size: inherit;
+  font-weight: 700;
+  color: inherit;
 }
 .ui-lottery-team-picker-modal__countdown--closed {
   color: var(--color-text);
