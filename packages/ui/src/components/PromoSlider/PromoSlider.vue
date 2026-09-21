@@ -192,7 +192,9 @@ defineExpose({ goTo, next, prev, current })
         :aria-label="prevLabel"
         @click="prev"
       >
-        ‹
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m15 18-6-6 6-6" />
+        </svg>
       </button>
       <button
         v-if="showArrows && slideCount > 1 && canGoNext"
@@ -201,7 +203,9 @@ defineExpose({ goTo, next, prev, current })
         :aria-label="nextLabel"
         @click="next"
       >
-        ›
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m9 18 6-6-6-6" />
+        </svg>
       </button>
     </div>
 
@@ -273,8 +277,6 @@ defineExpose({ goTo, next, prev, current })
   background: rgba(0, 0, 0, 0.5);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.35);
-  font-size: 19px;
-  line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -306,10 +308,12 @@ defineExpose({ goTo, next, prev, current })
   border: none;
   padding: 0;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
+  transition: background-color 0.2s, transform 0.2s, width 0.2s;
 }
 .ui-promo-slider__dot--active {
+  width:14px;
   background: var(--color-primary);
   transform: scale(1.25);
+  border-radius: 50px;
 }
 </style>

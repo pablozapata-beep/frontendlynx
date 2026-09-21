@@ -13,9 +13,10 @@ const InjectProbe = defineComponent({
     return {
       slidesPerView: inject('carousel-slides-per-view', 1),
       gap: inject('carousel-gap', '1rem'),
+      peek: inject('carousel-peek', 0),
     }
   },
-  template: '<div data-test="probe" :data-slides-per-view="slidesPerView" :data-gap="gap" />',
+  template: '<div data-test="probe" :data-slides-per-view="slidesPerView" :data-gap="gap" :data-peek="peek" />',
 })
 
 // jsdom no implementa scroll real
@@ -64,14 +65,23 @@ describe('CarouselSection', () => {
     expect(wrapper.find('.ui-carousel__arrow').exists()).toBe(false)
   })
 
-  it('slidesPerView/gap llegan a las slides a traves del slot forwarding (provide/inject)', () => {
+  it('slidesPerView/gap/peek llegan a las slides a traves del slot forwarding (provide/inject)', () => {
     const wrapper = mount(CarouselSection, {
-      props: { title: 'x', slidesPerView: 3, gap: '2rem' },
+      props: { title: 'x', slidesPerView: 3, gap: '2rem', peek: 0.2 },
       slots: { default: () => h(InjectProbe) },
     })
     const probe = wrapper.find('[data-test="probe"]')
     expect(probe.attributes('data-slides-per-view')).toBe('3')
     expect(probe.attributes('data-gap')).toBe('2rem')
+    expect(probe.attributes('data-peek')).toBe('0.2')
+  })
+
+  it('peek tiene un default de 0.15 aunque no se pase explicito', () => {
+    const wrapper = mount(CarouselSection, {
+      props: { title: 'x' },
+      slots: { default: () => h(InjectProbe) },
+    })
+    expect(wrapper.find('[data-test="probe"]').attributes('data-peek')).toBe('0.15')
   })
 })
 

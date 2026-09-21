@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils'
 import CasinoGameCard from './CasinoGameCard.vue'
 
 describe('CasinoGameCard', () => {
-  it('renderiza la imagen y el titulo en el overlay', () => {
+  it('renderiza la imagen y el titulo', () => {
     const wrapper = mount(CasinoGameCard, { props: { image: '/a.webp', title: '4 Dragon Kings' } })
     expect(wrapper.find('img').attributes('src')).toBe('/a.webp')
     expect(wrapper.find('img').attributes('alt')).toBe('4 Dragon Kings')
@@ -40,10 +40,29 @@ describe('CasinoGameCard', () => {
     expect(wrapper.attributes('aria-label')).toContain('Plinko')
   })
 
-  it('por defecto (variant=overlay) no muestra el footer siempre visible', () => {
-    const wrapper = mount(CasinoGameCard, { props: { image: '/a.webp', title: 'x' } })
+  it('variant=overlay: titulo siempre visible en el footer, el play queda solo en el overlay de hover', () => {
+    const wrapper = mount(CasinoGameCard, { props: { image: '/a.webp', title: 'Sugar Rush' } })
     expect(wrapper.find('.ui-casino-game-card__overlay').exists()).toBe(true)
-    expect(wrapper.find('.ui-casino-game-card__footer').exists()).toBe(false)
+    expect(wrapper.find('.ui-casino-game-card__overlay .ui-casino-game-card__title').exists()).toBe(false)
+    expect(wrapper.find('.ui-casino-game-card__overlay .ui-casino-game-card__play-icon').exists()).toBe(true)
+
+    expect(wrapper.find('.ui-casino-game-card__footer').exists()).toBe(true)
+    expect(wrapper.find('.ui-casino-game-card__footer .ui-casino-game-card__title').text()).toBe('Sugar Rush')
+  })
+
+  it('variant=overlay: sin provider no muestra ninguna segunda linea en el footer', () => {
+    const wrapper = mount(CasinoGameCard, { props: { image: '/a.webp', title: 'x' } })
+    expect(wrapper.find('.ui-casino-game-card__provider').exists()).toBe(false)
+    expect(wrapper.find('.ui-casino-game-card__subtitle').exists()).toBe(false)
+  })
+
+  it('variant=overlay: con provider, lo muestra debajo del titulo en el footer', () => {
+    const wrapper = mount(CasinoGameCard, {
+      props: { image: '/a.webp', title: 'Sugar Rush', provider: 'Pragmaticplay' },
+    })
+    expect(wrapper.find('.ui-casino-game-card__footer .ui-casino-game-card__provider').text()).toBe(
+      'Pragmaticplay',
+    )
   })
 
   it('variant=badge muestra titulo y subtitulo siempre visibles, sin overlay de hover', () => {
@@ -52,6 +71,14 @@ describe('CasinoGameCard', () => {
     expect(wrapper.find('.ui-casino-game-card__footer').exists()).toBe(true)
     expect(wrapper.find('.ui-casino-game-card__title').text()).toBe('Crash')
     expect(wrapper.find('.ui-casino-game-card__subtitle').text()).toBe('Juego original')
+  })
+
+  it('variant=badge ignora provider: siempre muestra subtitle, no la desarrolladora', () => {
+    const wrapper = mount(CasinoGameCard, {
+      props: { image: '/a.webp', title: 'x', variant: 'badge', provider: 'Pragmaticplay' },
+    })
+    expect(wrapper.find('.ui-casino-game-card__subtitle').exists()).toBe(true)
+    expect(wrapper.find('.ui-casino-game-card__provider').exists()).toBe(false)
   })
 
   it('sin playersOnline no muestra el badge de jugadores', () => {

@@ -28,7 +28,7 @@ withDefaults(
 <style scoped>
 .ui-card {
   background: var(--color-background);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   font-family: var(--font-family-body);
   color: var(--color-text);
   overflow: hidden;
@@ -44,17 +44,13 @@ withDefaults(
   background: var(--color-surface);
 }
 
-.ui-card__header,
-.ui-card__footer {
-  padding: var(--spacing-md) var(--spacing-lg);
-}
 .ui-card__header {
-  border-bottom: 1px solid var(--color-border);
   font-family: var(--font-family-heading);
   font-weight: 600;
+  padding: var(--spacing-md) var(--spacing-lg) 0 var(--spacing-lg);
 }
 .ui-card__footer {
-  border-top: 1px solid var(--color-border);
+  padding: 0 var(--spacing-lg) var(--spacing-sm) var(--spacing-lg) ;
 }
 
 .ui-card__body {

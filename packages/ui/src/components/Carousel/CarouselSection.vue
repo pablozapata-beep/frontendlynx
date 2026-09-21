@@ -7,6 +7,7 @@ withDefaults(
     title: string
     slidesPerView?: number
     gap?: string
+    peek?: number
     showViewAll?: boolean
     viewAllLabel?: string
     prevLabel?: string
@@ -15,6 +16,7 @@ withDefaults(
   {
     slidesPerView: 1,
     gap: '1rem',
+    peek: 0.15,
     showViewAll: true,
     viewAllLabel: 'Ver todo',
     prevLabel: 'Anterior',
@@ -49,7 +51,9 @@ const carouselRef = ref<InstanceType<typeof Carousel> | null>(null)
             :aria-label="prevLabel"
             @click="carouselRef?.scroll(-1)"
           >
-            ‹
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m15 18-6-6 6-6" />
+            </svg>
           </button>
           <button
             type="button"
@@ -57,13 +61,15 @@ const carouselRef = ref<InstanceType<typeof Carousel> | null>(null)
             :aria-label="nextLabel"
             @click="carouselRef?.scroll(1)"
           >
-            ›
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m9 18 6-6-6-6" />
+            </svg>
           </button>
         </div>
       </div>
     </div>
 
-    <Carousel ref="carouselRef" :slides-per-view="slidesPerView" :gap="gap" :show-arrows="false">
+    <Carousel ref="carouselRef" :slides-per-view="slidesPerView" :gap="gap" :peek="peek" :show-arrows="false">
       <slot />
     </Carousel>
   </section>
@@ -128,8 +134,6 @@ const carouselRef = ref<InstanceType<typeof Carousel> | null>(null)
   border: 1px solid var(--color-border);
   background: var(--color-surface);
   color: var(--color-text);
-  font-size: 1.1rem;
-  line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;

@@ -3,10 +3,15 @@ import { computed, inject } from 'vue'
 
 const slidesPerView = inject<number>('carousel-slides-per-view', 1)
 const gap = inject<string>('carousel-gap', '1rem')
+const peek = inject<number>('carousel-peek', 0)
 
-const desktopBasis = computed(
-  () => `calc((100% - (${slidesPerView} - 1) * ${gap}) / ${slidesPerView})`,
-)
+// El "peek" (fraccion del ancho de una slide que asoma de la siguiente) solo
+// aplica con mas de una slide por vista — con slidesPerView=1 el calculo da
+// exactamente lo mismo que antes (100%), sin cambiar ese caso.
+const desktopBasis = computed(() => {
+  const denominator = slidesPerView > 1 ? `${slidesPerView} + ${peek}` : `${slidesPerView}`
+  return `calc((100% - (${slidesPerView} - 1) * ${gap}) / (${denominator}))`
+})
 </script>
 
 <template>

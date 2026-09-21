@@ -4,14 +4,18 @@
     "primary": "#0E9F6E",
     "primary-hover": "#0B7A55",
     "secondary": "#F5A623",
+    "secondary-hover":"#F5A623",
     "background": "#FAFAFA",
+    "background-dark":"#000",
     "text": "#0F1F1A",
     "danger": "#D9364A",
     "success": "#1EA672",
     "warning": "#D97706",
     "info": "#2563EB",
     "border": "#E1E4DE",
-    "surface": "#F3F5F1"
+    "surface": "#F3F5F1",
+    "white":"#fff",
+    "gray":"#dfdfd6"
   },
   "font": {
     "family-heading": "'Albert Sans', sans-serif",

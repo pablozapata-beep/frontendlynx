@@ -3,15 +3,19 @@
   "color": {
     "primary": "#5fb602",
     "primary-hover": "#6dd202",
-    "secondary": "#F40",
+    "secondary": "#099078",
+    "secondary-hover":"#099078",
     "background": "#FFFFFF",
+    "background-dark":"#3a4142",
     "text": "#1A1A1A",
-    "danger": "#ea4c2b",
+    "danger": "#F40",
     "success": "#5fb602",
     "warning": "#F40",
     "info": "#2563EB",
     "border": "#E5E7EB",
-    "surface": "#F7F8FA"
+    "surface": "#F7F8FA",
+    "white":"#fff",
+    "gray":"#dfdfd6"
   },
   "font": {
     "family-heading": "'Lato', sans-serif",

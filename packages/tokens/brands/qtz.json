@@ -4,14 +4,18 @@
     "primary": "#FDF300",
     "primary-hover": "#FF6600",
     "secondary": "#FF6600",
+    "secondary-hover":"#FF6600",
     "background": "#FFFFFF",
+    "background-dark":"#000",
     "text": "#170D02",
     "danger": "#E11D48",
     "success": "#1EA672",
     "warning": "#D97706",
     "info": "#2563EB",
     "border": "#E6E1F5",
-    "surface": "#F7F5FC"
+    "surface": "#F7F5FC",
+    "white":"#fff",
+    "gray":"#dfdfd6"
   },
   "font": {
     "family-heading": "'Outfit', sans-serif",

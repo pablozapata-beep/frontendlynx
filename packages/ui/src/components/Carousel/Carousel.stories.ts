@@ -14,6 +14,7 @@ const meta = {
   argTypes: {
     slidesPerView: { control: { type: 'number', min: 1, max: 4 } },
     gap: { control: 'text' },
+    peek: { control: { type: 'number', min: 0, max: 0.5, step: 0.05 } },
     showArrows: { control: 'boolean' },
   },
   args: {
@@ -43,6 +44,38 @@ export const UnaPorVista: Story = {
 
 export const TresPorVista: Story = {
   args: { slidesPerView: 3 },
+  render: (args) => ({
+    components: { Carousel, CarouselSlide },
+    setup: () => ({ args }),
+    template: `
+      <Carousel v-bind="args">
+        <CarouselSlide v-for="n in 6" :key="n">
+          <div style="${SLIDE_STYLE}">Slide {{ n }}</div>
+        </CarouselSlide>
+      </Carousel>
+    `,
+  }),
+}
+
+export const ConPeekMasMarcado: Story = {
+  name: 'Con peek mas marcado',
+  args: { slidesPerView: 2, peek: 0.35 },
+  render: (args) => ({
+    components: { Carousel, CarouselSlide },
+    setup: () => ({ args }),
+    template: `
+      <Carousel v-bind="args">
+        <CarouselSlide v-for="n in 5" :key="n">
+          <div style="${SLIDE_STYLE}">Slide {{ n }}</div>
+        </CarouselSlide>
+      </Carousel>
+    `,
+  }),
+}
+
+export const SinPeek: Story = {
+  name: 'Sin peek (encaja justo)',
+  args: { slidesPerView: 3, peek: 0 },
   render: (args) => ({
     components: { Carousel, CarouselSlide },
     setup: () => ({ args }),

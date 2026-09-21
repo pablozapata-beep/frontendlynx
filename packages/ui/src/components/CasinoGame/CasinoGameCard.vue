@@ -12,6 +12,8 @@ const props = withDefaults(
     playLabel?: string
     playersOnline?: number
     subtitle?: string
+    /** Solo variant="overlay": nombre de la desarrolladora, siempre visible bajo el titulo. */
+    provider?: string
   }>(),
   {
     variant: 'overlay',
@@ -20,6 +22,7 @@ const props = withDefaults(
     playLabel: 'Jugar',
     playersOnline: undefined,
     subtitle: 'Juego original',
+    provider: undefined,
   },
 )
 
@@ -70,12 +73,12 @@ const formattedPlayers = computed(() => {
           <path d="M6 4l14 8-14 8V4Z" fill="currentColor" />
         </svg>
       </span>
-      <h3 class="ui-casino-game-card__title">{{ title }}</h3>
     </span>
 
-    <span v-else class="ui-casino-game-card__footer">
+    <span class="ui-casino-game-card__footer">
       <h3 class="ui-casino-game-card__title">{{ title }}</h3>
-      <p class="ui-casino-game-card__subtitle">{{ subtitle }}</p>
+      <p v-if="variant === 'badge'" class="ui-casino-game-card__subtitle">{{ subtitle }}</p>
+      <p v-else-if="provider" class="ui-casino-game-card__provider">{{ provider }}</p>
     </span>
   </button>
 </template>
@@ -176,6 +179,7 @@ const formattedPlayers = computed(() => {
   font-size: 16px;
   line-height: 1.2;
   text-align: center;
+  text-transform: uppercase;
 }
 
 .ui-casino-game-card__players {
@@ -195,16 +199,14 @@ const formattedPlayers = computed(() => {
   border-radius: 999px;
 }
 
-/* variante "badge": titulo + subtitulo siempre visibles, sin overlay de hover */
+/* Titulo (+ subtitulo/desarrolladora, segun la variante) siempre visible,
+   pegado abajo con un scrim para que se lea encima de cualquier imagen. */
 .ui-casino-game-card__footer {
   position: absolute;
   inset: auto 0 0 0;
   padding: var(--spacing-lg) var(--spacing-sm) var(--spacing-sm);
   background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.35) 60%, transparent 100%);
   text-align: center;
-}
-.ui-casino-game-card--badge .ui-casino-game-card__title {
-  text-transform: uppercase;
 }
 .ui-casino-game-card__subtitle {
   margin: 2px 0 0;
@@ -214,5 +216,12 @@ const formattedPlayers = computed(() => {
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: rgba(255, 255, 255, 0.75);
+}
+.ui-casino-game-card__provider {
+  margin: 2px 0 0;
+  font-family: var(--font-family-body);
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.65);
 }
 </style>
