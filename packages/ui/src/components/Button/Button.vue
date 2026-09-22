@@ -102,6 +102,7 @@ withDefaults(
   font-size: 14px;
 }
 .ui-button--md {
+  min-width:150px;
   height:42px;
   padding: 0 var(--spacing-lg);
   font-size: 16px;

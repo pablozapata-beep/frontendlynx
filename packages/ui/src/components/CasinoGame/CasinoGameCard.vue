@@ -5,14 +5,15 @@ const props = withDefaults(
   defineProps<{
     image: string
     title: string
-    /** 'overlay': titulo+play aparecen al hover. 'badge': titulo y jugadores online siempre visibles, sin hover. */
+    /** Solo afecta el footer: 'overlay' no muestra subtitle de fallback, 'badge' si. El play siempre aparece al hover en ambas. */
     variant?: 'overlay' | 'badge'
     jackpotAmount?: number
     currency?: string
     playLabel?: string
     playersOnline?: number
+    /** Solo se usa en variant="badge" cuando no se pasa provider. */
     subtitle?: string
-    /** Solo variant="overlay": nombre de la desarrolladora, siempre visible bajo el titulo. */
+    /** Nombre de la desarrolladora, siempre visible bajo el titulo en cualquier variante; tiene prioridad sobre subtitle. */
     provider?: string
   }>(),
   {
@@ -48,13 +49,9 @@ const formattedPlayers = computed(() => {
 </script>
 
 <template>
-  <button
-    type="button"
-    class="ui-casino-game-card"
-    :class="[`ui-casino-game-card--${variant}`, { 'ui-casino-game-card--with-jackpot': formattedJackpot }]"
-    :aria-label="`${playLabel}: ${title}`"
-    @click="emit('play')"
-  >
+  <div 
+   class="ui-casino-game-card"
+   :class="[`ui-casino-game-card--${variant}`, { 'ui-casino-game-card--with-jackpot': formattedJackpot }]">
     <span v-if="formattedJackpot" class="ui-casino-game-card__jackpot">{{ currency }} {{ formattedJackpot }}</span>
 
     <img :src="image" :alt="title" class="ui-casino-game-card__image" loading="lazy" />
@@ -67,20 +64,28 @@ const formattedPlayers = computed(() => {
       {{ formattedPlayers }}
     </span>
 
-    <span v-if="variant === 'overlay'" class="ui-casino-game-card__overlay">
+    <div class="ui-casino-game-card__overlay">
       <span class="ui-casino-game-card__play-icon" aria-hidden="true">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
           <path d="M6 4l14 8-14 8V4Z" fill="currentColor" />
         </svg>
       </span>
-    </span>
+    </div>
 
-    <span class="ui-casino-game-card__footer">
+    <div class="ui-casino-game-card__footer">
       <h3 class="ui-casino-game-card__title">{{ title }}</h3>
-      <p v-if="variant === 'badge'" class="ui-casino-game-card__subtitle">{{ subtitle }}</p>
-      <p v-else-if="provider" class="ui-casino-game-card__provider">{{ provider }}</p>
-    </span>
-  </button>
+      <p v-if="provider" class="ui-casino-game-card__provider">{{ provider }}</p>
+      <p v-else-if="variant === 'badge'" class="ui-casino-game-card__subtitle">{{ subtitle }}</p>
+    </div>
+    <a 
+    class="ui-casino-game-card__full-cover-link"
+    href="javascript:void(0)" 
+    @click="emit('play')" 
+    :aria-label="`${playLabel}: 
+    ${title}`" aria-hidden="true" 
+    role="button"></a>
+  </div>
+  
 </template>
 
 <style scoped>
@@ -104,6 +109,18 @@ const formattedPlayers = computed(() => {
      El espacio para que la pill no quede pegada al elemento de arriba lo
      tiene que dar el layout que arma el grid (gap o padding-top), no la card. */
   overflow: visible;
+  .ui-casino-game-card__image {
+    border-radius:var(--radius-md);
+  }
+  .ui-casino-game-card__footer {
+    border-radius:0 0 var(--radius-md) var(--radius-md);
+  }
+}
+.ui-casino-game-card,
+.ui-casino-game-card--badge {
+  &:hover {
+     transform: translateY(-3px);
+  }
 }
 .ui-casino-game-card--badge:hover {
   transform: translateY(-3px);
@@ -199,8 +216,8 @@ const formattedPlayers = computed(() => {
   border-radius: 999px;
 }
 
-/* Titulo (+ subtitulo/desarrolladora, segun la variante) siempre visible,
-   pegado abajo con un scrim para que se lea encima de cualquier imagen. */
+/* Titulo (+ desarrolladora, o subtitulo como fallback en "badge") siempre
+   visible, pegado abajo con un scrim para que se lea encima de cualquier imagen. */
 .ui-casino-game-card__footer {
   position: absolute;
   inset: auto 0 0 0;
@@ -223,5 +240,14 @@ const formattedPlayers = computed(() => {
   font-size: 11px;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.65);
+}
+
+.ui-casino-game-card__full-cover-link {
+  position: absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  display: inline-block;
 }
 </style>

@@ -124,7 +124,7 @@ const modeOptions = [
   gap: var(--spacing-md);
   flex-wrap: wrap;
   padding: var(--spacing-sm) var(--spacing-md);
-  background: var(--color-surface);
+  background: var(--color-surface-dark);
   border-top: 1px solid var(--color-border);
 }
 
@@ -142,19 +142,19 @@ const modeOptions = [
   gap: 4px;
   width: 2.25rem;
   height: 2.25rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-surface-dark);
   border-radius: var(--radius-sm);
-  background: var(--color-background);
-  color: var(--color-text);
+  background: var(--color-surface-dark-light);
+  color: var(--color-surface-dark-text-primary);
   cursor: pointer;
   transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
 }
 .ui-game-player-toolbar__icon-btn:hover {
   border-color: var(--color-primary);
-  color: var(--color-primary);
+  color: var(--color-surface-dark-text-secondary);
 }
 .ui-game-player-toolbar__icon-btn--active {
-  background: var(--color-primary);
+  background: #506f2f;
   border-color: var(--color-primary);
   color: white;
 }

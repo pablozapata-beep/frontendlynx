@@ -65,19 +65,28 @@ describe('CasinoGameCard', () => {
     )
   })
 
-  it('variant=badge muestra titulo y subtitulo siempre visibles, sin overlay de hover', () => {
+  it('variant=badge muestra titulo y subtitulo siempre visibles, y tambien tiene el overlay de play al hover', () => {
     const wrapper = mount(CasinoGameCard, { props: { image: '/a.webp', title: 'Crash', variant: 'badge' } })
-    expect(wrapper.find('.ui-casino-game-card__overlay').exists()).toBe(false)
+    expect(wrapper.find('.ui-casino-game-card__overlay').exists()).toBe(true)
+    expect(wrapper.find('.ui-casino-game-card__overlay .ui-casino-game-card__play-icon').exists()).toBe(true)
     expect(wrapper.find('.ui-casino-game-card__footer').exists()).toBe(true)
     expect(wrapper.find('.ui-casino-game-card__title').text()).toBe('Crash')
     expect(wrapper.find('.ui-casino-game-card__subtitle').text()).toBe('Juego original')
   })
 
-  it('variant=badge ignora provider: siempre muestra subtitle, no la desarrolladora', () => {
+  it('variant=badge con provider lo muestra en vez del subtitle', () => {
     const wrapper = mount(CasinoGameCard, {
       props: { image: '/a.webp', title: 'x', variant: 'badge', provider: 'Pragmaticplay' },
     })
-    expect(wrapper.find('.ui-casino-game-card__subtitle').exists()).toBe(true)
+    expect(wrapper.find('.ui-casino-game-card__provider').text()).toBe('Pragmaticplay')
+    expect(wrapper.find('.ui-casino-game-card__subtitle').exists()).toBe(false)
+  })
+
+  it('variant=badge sin provider sigue mostrando el subtitle', () => {
+    const wrapper = mount(CasinoGameCard, {
+      props: { image: '/a.webp', title: 'x', variant: 'badge', subtitle: 'Exclusivo' },
+    })
+    expect(wrapper.find('.ui-casino-game-card__subtitle').text()).toBe('Exclusivo')
     expect(wrapper.find('.ui-casino-game-card__provider').exists()).toBe(false)
   })
 

@@ -3,6 +3,7 @@
   "color": {
     "primary": "#0E9F6E",
     "primary-hover": "#0B7A55",
+    "primary-active-surface":"#a36243",
     "secondary": "#F5A623",
     "secondary-hover":"#F5A623",
     "background": "#FAFAFA",
@@ -14,6 +15,11 @@
     "info": "#2563EB",
     "border": "#E1E4DE",
     "surface": "#F3F5F1",
+    "surface-dark":"#292D2E",
+    "surface-dark-light":"#3A4142",
+    "surface-dark-text-primary":"#b3bead",
+    "surface-dark-text-secondary":"#D5E2E5",
+    "surface-wrap":"#f4f3f3",
     "white":"#fff",
     "gray":"#dfdfd6"
   },

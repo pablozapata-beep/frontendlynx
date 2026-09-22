@@ -4,12 +4,12 @@ import CarouselSlide from './CarouselSlide.vue'
 import CasinoGameCard from '../CasinoGame/CasinoGameCard.vue'
 
 const GAMES = [
-  { title: 'Crash', image: 'https://static.trllnhelp.com/site/images_v4/casino-games/game-img/1182.webp' },
-  { title: 'Limbo', image: 'https://static.trllnhelp.com/site/images_v4/casino-games/game-img/968.webp' },
-  { title: 'Keno', image: 'https://static.trllnhelp.com/site/images_v4/casino-games/game-img/4035.webp' },
-  { title: 'Mayor o Menor', image: 'https://static.trllnhelp.com/site/images_v4/casino-games/game-img/1182.webp' },
-  { title: 'Leyenda de la Torre', image: 'https://static.trllnhelp.com/site/images_v4/casino-games/game-img/968.webp' },
-  { title: 'Dados Clásico', image: 'https://static.trllnhelp.com/site/images_v4/casino-games/game-img/4035.webp' },
+  { title: 'Crash', image: 'https://static.trllnhelp.com/site/images_v4/casino-games/game-img/1182.webp', provider: 'Evolution' },
+  { title: 'Limbo', image: 'https://static.trllnhelp.com/site/images_v4/casino-games/game-img/968.webp', provider: 'Softswiss' },
+  { title: 'Keno', image: 'https://static.trllnhelp.com/site/images_v4/casino-games/game-img/4035.webp', provider: 'Pragmatic Play' },
+  { title: 'Mayor o Menor', image: 'https://static.trllnhelp.com/site/images_v4/casino-games/game-img/1182.webp', provider: 'GGames' },
+  { title: 'Leyenda de la Torre', image: 'https://static.trllnhelp.com/site/images_v4/casino-games/game-img/968.webp', provider: 'Red Tiger' },
+  { title: 'Dados Clásico', image: 'https://static.trllnhelp.com/site/images_v4/casino-games/game-img/4035.webp', provider: 'Evolution' },
 ]
 
 const meta = {
@@ -38,7 +38,7 @@ export const Default: Story = {
       <div style="max-width: 60rem;">
         <CarouselSection v-bind="args">
           <CarouselSlide v-for="game in games" :key="game.title">
-            <CasinoGameCard :image="game.image" :title="game.title" />
+            <CasinoGameCard :image="game.image" :title="game.title" :provider="game.provider" />
           </CarouselSlide>
         </CarouselSection>
       </div>
@@ -56,7 +56,7 @@ export const SinVerTodo: Story = {
       <div style="max-width: 60rem;">
         <CarouselSection v-bind="args">
           <CarouselSlide v-for="game in games" :key="game.title">
-            <CasinoGameCard :image="game.image" :title="game.title" />
+            <CasinoGameCard :image="game.image" :title="game.title" :provider="game.provider" />
           </CarouselSlide>
         </CarouselSection>
       </div>
@@ -74,7 +74,7 @@ export const Mobile: Story = {
     template: `
       <CarouselSection v-bind="args">
         <CarouselSlide v-for="game in games" :key="game.title">
-          <CasinoGameCard :image="game.image" :title="game.title" />
+          <CasinoGameCard :image="game.image" :title="game.title" :provider="game.provider" />
         </CarouselSlide>
       </CarouselSection>
     `,

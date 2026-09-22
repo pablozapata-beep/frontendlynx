@@ -120,10 +120,10 @@ onBeforeUnmount(() => {
 
 .ui-modal-close {
   position: absolute;
-  top: var(--spacing-md);
-  right: var(--spacing-md);
-  width: 2rem;
-  height: 2rem;
+  top: 5px;
+  right: 5px;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 50%;
   border: 1px solid var(--color-border);
   background: var(--color-surface);

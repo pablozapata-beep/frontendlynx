@@ -79,7 +79,7 @@ const emit = defineEmits<{
   text-align: left;
 }
 .ui-game-balance-modal__select-label {
-  font-size: 13px;
+  font-size: clamp(1rem, 5vw, 1.3rem);
   font-weight: 600;
 }
 .ui-game-balance-modal__select {
@@ -100,13 +100,19 @@ const emit = defineEmits<{
 
 .ui-game-balance-modal__bonus {
   margin: 0;
+  font-size: clamp(1rem, 5vw, 1.3rem); 
   font-weight: 700;
+  padding:.6rem;
+  border-radius:var(--radius-sm);
   color: var(--color-warning);
+  background: var(--color-surface-wrap);
 }
 
 .ui-game-balance-modal__actions {
+  width:100%;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--spacing-sm);
 }
 </style>

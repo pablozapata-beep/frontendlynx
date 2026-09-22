@@ -8,6 +8,7 @@ const meta = {
   args: {
     image: 'https://static.trllnhelp.com/site/images_v4/casino-games/game-img/1182.webp',
     title: '4 Dragon Kings',
+    provider: 'Red Tiger',
   },
 } satisfies Meta<typeof CasinoGameCard>
 
@@ -28,6 +29,7 @@ export const ConJackpot: Story = {
     image: 'https://static.trllnhelp.com/site/images_v4/casino-games/game-img/968.webp',
     title: '40 Dice Fire',
     jackpotAmount: 1098618.51,
+    provider: 'Pragmatic Play',
   },
   render: (args) => ({
     components: { CasinoGameCard },
@@ -49,9 +51,9 @@ export const Grilla: Story = {
         fila (como aca) conviene un poco de padding-top en el contenedor.
       -->
       <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap: 1.5rem; max-width: 50rem; padding-top: 1rem;">
-        <CasinoGameCard image="https://static.trllnhelp.com/site/images_v4/casino-games/game-img/1182.webp" title="4 Dragon Kings" />
-        <CasinoGameCard image="https://static.trllnhelp.com/site/images_v4/casino-games/game-img/968.webp" title="40 Dice Fire" :jackpot-amount="1098618.51" />
-        <CasinoGameCard image="https://static.trllnhelp.com/site/images_v4/casino-games/game-img/4035.webp" title="Plinko" />
+        <CasinoGameCard image="https://static.trllnhelp.com/site/images_v4/casino-games/game-img/1182.webp" title="4 Dragon Kings" provider="Red Tiger" />
+        <CasinoGameCard image="https://static.trllnhelp.com/site/images_v4/casino-games/game-img/968.webp" title="40 Dice Fire" :jackpot-amount="1098618.51" provider="Pragmatic Play" />
+        <CasinoGameCard image="https://static.trllnhelp.com/site/images_v4/casino-games/game-img/4035.webp" title="Plinko" provider="Evolution" />
       </div>
     `,
   }),
@@ -64,6 +66,7 @@ export const VarianteBadge: Story = {
     image: 'https://picsum.photos/seed/crash/300/450',
     title: 'Crash',
     playersOnline: 2800,
+    provider: 'Evolution',
   },
   render: (args) => ({
     components: { CasinoGameCard },
@@ -78,11 +81,11 @@ export const GrillaBadge: Story = {
     components: { CasinoGameCard },
     template: `
       <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(130px,1fr)); gap: 1rem; max-width: 60rem; padding: 1rem; background: #1a1a1a;">
-        <CasinoGameCard variant="badge" image="https://picsum.photos/seed/crash/300/450" title="Crash" :players-online="2800" />
-        <CasinoGameCard variant="badge" image="https://picsum.photos/seed/limbo/300/450" title="Limbo" :players-online="236" />
-        <CasinoGameCard variant="badge" image="https://picsum.photos/seed/keno/300/450" title="Keno" :players-online="172" />
-        <CasinoGameCard variant="badge" image="https://picsum.photos/seed/mayormenor/300/450" title="Mayor o Menor" :players-online="190" />
-        <CasinoGameCard variant="badge" image="https://picsum.photos/seed/plinko/300/450" title="Plinko" :players-online="122" />
+        <CasinoGameCard variant="badge" image="https://picsum.photos/seed/crash/300/450" title="Crash" :players-online="2800" provider="Evolution" />
+        <CasinoGameCard variant="badge" image="https://picsum.photos/seed/limbo/300/450" title="Limbo" :players-online="236" provider="Softswiss" />
+        <CasinoGameCard variant="badge" image="https://picsum.photos/seed/keno/300/450" title="Keno" :players-online="172" provider="Pragmatic Play" />
+        <CasinoGameCard variant="badge" image="https://picsum.photos/seed/mayormenor/300/450" title="Mayor o Menor" :players-online="190" provider="GGames" />
+        <CasinoGameCard variant="badge" image="https://picsum.photos/seed/plinko/300/450" title="Plinko" :players-online="122" provider="Red Tiger" />
       </div>
     `,
   }),
