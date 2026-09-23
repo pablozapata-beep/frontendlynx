@@ -1,20 +1,41 @@
 :root {
     --green:#5fb602;
-    --product-card-bg:linear-gradient(0deg,black 0%,#171717 16%,black 45%,black 82%,#1c1c1c 100%);
-    --product-card-bg-hover:linear-gradient(-180deg,black 0%,#171717 16%,black 45%,black 82%,#1c1c1c 100%);
-}
-
-[data-brand="nwt"] .ui-card.ui-jackpot-card {
-    background: var(--product-card-bg);
-    &:hover {
-        background: var(--product-card-bg-hover);
-    }
 }
 
 [data-brand="nwt"] .ui-card {
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     border:1px solid #E5E7EB;
+    .ui-jackpot-card__name,
+    .ui-jackpot-card__region,
+    .ui-countdown__framed-value,
+    .ui-countdown__framed-label,
+    .ui-jackpot-card__jackpot-amount,
+    .ui-jackpot-card__price,
+    .ui-jackpot-card__jackpot-label,
+    .ui-jackpot-card__next-draw,
+    .ui-jackpot-card__jackpot-note,
+    .ui-jackpot-card__price-unit{
+         color:var(--color-white);
+    }
+    .ui-jackpot-card__region,
+    .ui-countdown__framed-value,
+    .ui-jackpot-card__jackpot-label{
+        opacity: .8;
+    }
+
+     .ui-countdown__framed-label,
+     .ui-jackpot-card__jackpot-note,
+    .ui-jackpot-card__price-unit,
+    .ui-jackpot-card__next-draw {
+        opacity: .6;
+     }
+
+     .ui-countdown__framed {
+        border-top: 1px dashed var(--color-surface-dark-text-primary);
+        border-bottom: 1px dashed var(--color-surface-dark-text-primary);
+     }
 }
+
 
 [data-brand="nwt"] .ui-accordion-item__content {
     a {

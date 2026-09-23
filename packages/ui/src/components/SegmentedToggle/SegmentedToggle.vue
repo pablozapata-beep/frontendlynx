@@ -54,7 +54,7 @@ const emit = defineEmits<{
 }
 
 .ui-segmented-toggle__option--active {
-  background: var(--color-surface-dark);
+  background: var(--color-secondary-active-surface);
   color: white;
   font-weight: 700;
 }

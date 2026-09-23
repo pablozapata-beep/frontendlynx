@@ -4,6 +4,7 @@
     "primary": "#5fb602",
     "primary-hover": "#6dd202",
     "primary-active-surface":"#506f2f",
+    "secondary-active-surface":"#676767",
     "secondary": "#099078",
     "secondary-hover":"#099078",
     "background": "#FFFFFF",
@@ -19,6 +20,8 @@
     "surface-dark-light":"#3A4142",
     "surface-dark-text-primary":"#b3bead",
     "surface-dark-text-secondary":"#D5E2E5",
+    "surface-gradient-dark-primary":"linear-gradient(0deg,black 0%,#171717 16%,black 45%,black 82%,#1c1c1c 100%);",
+    "surface-gradient-dark-secondary":"linear-gradient(-180deg,black 0%,#171717 16%,black 45%,black 82%,#1c1c1c 100%);",
     "surface-wrap":"#f4f3f3",
     "white":"#fff",
     "gray":"#dfdfd6"

@@ -154,7 +154,7 @@ const modeOptions = [
   color: var(--color-surface-dark-text-secondary);
 }
 .ui-game-player-toolbar__icon-btn--active {
-  background: #506f2f;
+  background: var(--color-secondary-active-surface);
   border-color: var(--color-primary);
   color: white;
 }

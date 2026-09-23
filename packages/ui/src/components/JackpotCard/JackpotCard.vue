@@ -16,6 +16,10 @@ const props = withDefaults(
     ctaLabel?: string
     priceUnitLabel?: string
     drawPrefixLabel?: string
+    countdownDayLabel?: string
+    countdownHourLabel?: string
+    countdownMinuteLabel?: string
+    countdownSecondLabel?: string
   }>(),
   {
     jackpotLabel: 'Bote actual',
@@ -24,6 +28,10 @@ const props = withDefaults(
     ctaLabel: 'Jugar ahora',
     priceUnitLabel: undefined,
     drawPrefixLabel: 'Sorteo',
+    countdownDayLabel: 'días',
+    countdownHourLabel: 'hs',
+    countdownMinuteLabel: 'min',
+    countdownSecondLabel: 'seg',
   },
 )
 
@@ -46,7 +54,7 @@ function formatAmount(amount: number) {
 <template>
   <Card variant="elevated" class="ui-jackpot-card">
     <div class="ui-jackpot-card__top">
-      <div>
+      <div class="ui-jackpot-card__info">
         <p class="ui-jackpot-card__name">{{ game.name }}</p>
         <p class="ui-jackpot-card__region">{{ game.region }}</p>
       </div>
@@ -66,7 +74,15 @@ function formatAmount(amount: number) {
       <p class="ui-jackpot-card__jackpot-note">{{ jackpotNote }}</p>
     </div>
 
-    <Countdown :target="game.closesAt" @expire="emit('expire')" />
+    <Countdown
+      variant="framed"
+      :target="game.closesAt"
+      :day-label="countdownDayLabel"
+      :hour-label="countdownHourLabel"
+      :minute-label="countdownMinuteLabel"
+      :second-label="countdownSecondLabel"
+      @expire="emit('expire')"
+    />
 
     <div class="ui-jackpot-card__price-row">
       <span class="ui-jackpot-card__price">{{ currency }}{{ game.price.toFixed(2) }}</span>
@@ -99,12 +115,19 @@ function formatAmount(amount: number) {
   align-items: flex-start;
 }
 
+.ui-jackpot-card__info {
+  min-width: 0;
+}
+
 .ui-jackpot-card__name {
   font-family: var(--font-family-heading);
   font-weight: 700;
   font-size: 20px;
   margin: 0;
   color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ui-jackpot-card__region {

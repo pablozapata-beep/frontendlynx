@@ -108,4 +108,43 @@ describe('Countdown', () => {
       expect(wrapper.find('.ui-countdown__label').text()).toBe('Cierra en')
     })
   })
+
+  describe('variant="framed"', () => {
+    it('muestra dias/horas/minutos/segundos, cada uno con su label', () => {
+      const target = Date.now() + (2 * 86400 + 3 * 3600 + 4 * 60 + 5) * 1000
+      const wrapper = mount(Countdown, { props: { target, variant: 'framed' } })
+      const values = wrapper.findAll('.ui-countdown__framed-value')
+      expect(values.map((v) => v.text())).toEqual(['02', '03', '04', '05'])
+
+      const labels = wrapper.findAll('.ui-countdown__framed-label')
+      expect(labels.map((l) => l.text())).toEqual(['d', 'h', 'm', 's'])
+    })
+
+    it('respeta los labels custom por unidad', () => {
+      const target = Date.now() + (2 * 86400 + 3 * 3600 + 4 * 60 + 5) * 1000
+      const wrapper = mount(Countdown, {
+        props: {
+          target,
+          variant: 'framed',
+          dayLabel: 'días',
+          hourLabel: 'hs',
+          minuteLabel: 'min',
+          secondLabel: 'seg',
+        },
+      })
+      const labels = wrapper.findAll('.ui-countdown__framed-label')
+      expect(labels.map((l) => l.text())).toEqual(['días', 'hs', 'min', 'seg'])
+    })
+
+    it('se sigue actualizando cada segundo y emitiendo expire igual que la variante tiles', async () => {
+      const target = Date.now() + 1000
+      const wrapper = mount(Countdown, { props: { target, variant: 'framed' } })
+      expect(wrapper.findAll('.ui-countdown__framed-value').at(-1)?.text()).toBe('01')
+
+      await vi.advanceTimersByTimeAsync(1000)
+      await wrapper.vm.$nextTick()
+      expect(wrapper.findAll('.ui-countdown__framed-value').at(-1)?.text()).toBe('00')
+      expect(wrapper.emitted('expire')).toHaveLength(1)
+    })
+  })
 })

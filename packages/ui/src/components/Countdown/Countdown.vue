@@ -4,8 +4,8 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 const props = withDefaults(
   defineProps<{
     target: Date | number | string
-    /** 'tiles': el clasico con recuadros por unidad. 'minimal': una linea de texto tipo "2 Días 11:15:33". */
-    variant?: 'tiles' | 'minimal'
+    /** 'tiles': el clasico con recuadros por unidad. 'minimal': una linea de texto tipo "2 Días 11:15:33". 'framed': fila de numero+label enmarcada con un borde punteado arriba/abajo, como en una card. */
+    variant?: 'tiles' | 'minimal' | 'framed'
     label?: string
     dayLabel?: string
     hourLabel?: string
@@ -79,6 +79,25 @@ onBeforeUnmount(() => {
     <p v-if="label" class="ui-countdown__label">{{ label }}</p>
 
     <p v-if="variant === 'minimal'" class="ui-countdown__value">{{ minimalText }}</p>
+
+    <div v-else-if="variant === 'framed'" class="ui-countdown__framed">
+      <div class="ui-countdown__framed-box">
+        <b class="ui-countdown__framed-value">{{ pad(days) }}</b>
+        <span class="ui-countdown__framed-label">{{ dayLabel }}</span>
+      </div>
+      <div class="ui-countdown__framed-box">
+        <b class="ui-countdown__framed-value">{{ pad(hours) }}</b>
+        <span class="ui-countdown__framed-label">{{ hourLabel }}</span>
+      </div>
+      <div class="ui-countdown__framed-box">
+        <b class="ui-countdown__framed-value">{{ pad(minutes) }}</b>
+        <span class="ui-countdown__framed-label">{{ minuteLabel }}</span>
+      </div>
+      <div class="ui-countdown__framed-box">
+        <b class="ui-countdown__framed-value">{{ pad(seconds) }}</b>
+        <span class="ui-countdown__framed-label">{{ secondLabel }}</span>
+      </div>
+    </div>
 
     <div v-else class="ui-countdown__row">
       <div class="ui-countdown__group">
@@ -161,6 +180,36 @@ onBeforeUnmount(() => {
 .ui-countdown__suffix {
   font-size: 12px;
   opacity: 0.65;
+}
+
+.ui-countdown__framed {
+  display: flex;
+  gap: var(--spacing-sm);
+  border-top: 1px dashed var(--color-border);
+  border-bottom: 1px dashed var(--color-border);
+  padding: var(--spacing-sm) 0;
+}
+
+.ui-countdown__framed-box {
+  flex: 1;
+  text-align: center;
+}
+
+.ui-countdown__framed-value {
+  display: block;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--color-text);
+}
+
+.ui-countdown__framed-label {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text);
+  opacity: 0.6;
 }
 
 @media (prefers-reduced-motion: reduce) {

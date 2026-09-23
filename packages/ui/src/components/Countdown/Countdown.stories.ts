@@ -62,3 +62,20 @@ export const MinimalMenosDeUnDia: Story = {
     variant: 'minimal',
   },
 }
+
+export const Framed: Story = {
+  name: 'Variante framed (como en la card de Hot Jackpots)',
+  args: {
+    target: inMs(2 * 86_400_000 + 5 * 3_600_000 + 20 * 60_000),
+    variant: 'framed',
+    dayLabel: 'días',
+    hourLabel: 'hs',
+    minuteLabel: 'min',
+    secondLabel: 'seg',
+  },
+  render: (args) => ({
+    components: { Countdown },
+    setup: () => ({ args }),
+    template: `<div style="width: 16rem;"><Countdown v-bind="args" /></div>`,
+  }),
+}
