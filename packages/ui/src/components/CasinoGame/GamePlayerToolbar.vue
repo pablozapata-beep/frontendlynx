@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PillToggleGroup from '../PillToggleGroup/PillToggleGroup.vue'
+import SegmentedToggle from '../SegmentedToggle/SegmentedToggle.vue'
 
 type Mode = 'demo' | 'real'
 
@@ -24,7 +24,7 @@ const props = withDefaults(
     fullscreen: false,
     floating: false,
     demoLabel: 'Demo',
-    realLabel: 'Juego Real',
+    realLabel: 'Jugar',
     screenshotLabel: 'Capturar pantalla',
     favoriteLabel: 'Favorito',
     refreshLabel: 'Recargar',
@@ -107,7 +107,7 @@ const modeOptions = [
       </button>
     </div>
 
-    <PillToggleGroup
+    <SegmentedToggle
       class="ui-game-player-toolbar__mode"
       :options="modeOptions"
       :model-value="mode"

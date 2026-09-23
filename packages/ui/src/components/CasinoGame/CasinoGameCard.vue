@@ -77,13 +77,12 @@ const formattedPlayers = computed(() => {
       <p v-if="provider" class="ui-casino-game-card__provider">{{ provider }}</p>
       <p v-else-if="variant === 'badge'" class="ui-casino-game-card__subtitle">{{ subtitle }}</p>
     </div>
-    <a 
-    class="ui-casino-game-card__full-cover-link"
-    href="javascript:void(0)" 
-    @click="emit('play')" 
-    :aria-label="`${playLabel}: 
-    ${title}`" aria-hidden="true" 
-    role="button"></a>
+    <button
+      type="button"
+      class="ui-casino-game-card__play-button"
+      :aria-label="`${playLabel}: ${title}`"
+      @click="emit('play')"
+    ></button>
   </div>
   
 </template>
@@ -167,7 +166,7 @@ const formattedPlayers = computed(() => {
   transition: opacity 0.2s ease;
 }
 .ui-casino-game-card:hover .ui-casino-game-card__overlay,
-.ui-casino-game-card:focus-visible .ui-casino-game-card__overlay {
+.ui-casino-game-card:focus-within .ui-casino-game-card__overlay {
   opacity: 1;
 }
 
@@ -184,7 +183,7 @@ const formattedPlayers = computed(() => {
   transition: transform 0.2s ease;
 }
 .ui-casino-game-card:hover .ui-casino-game-card__play-icon,
-.ui-casino-game-card:focus-visible .ui-casino-game-card__play-icon {
+.ui-casino-game-card:focus-within .ui-casino-game-card__play-icon {
   transform: scale(1);
 }
 
@@ -242,12 +241,18 @@ const formattedPlayers = computed(() => {
   color: rgba(255, 255, 255, 0.65);
 }
 
-.ui-casino-game-card__full-cover-link {
+.ui-casino-game-card__play-button {
   position: absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  display: inline-block;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+.ui-casino-game-card__play-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
 }
 </style>

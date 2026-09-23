@@ -5,14 +5,14 @@ import GamePlayerToolbar from './GamePlayerToolbar.vue'
 describe('GamePlayerToolbar', () => {
   it('renderiza el switch Demo/Juego Real con el modo activo', () => {
     const wrapper = mount(GamePlayerToolbar, { props: { mode: 'real' } })
-    const active = wrapper.find('.ui-pill-toggle-group__pill--active')
-    expect(active.text()).toBe('Juego Real')
+    const active = wrapper.find('.ui-segmented-toggle__option--active')
+    expect(active.text()).toBe('Jugar')
   })
 
-  it('emite update:mode al cambiar el pill activo', async () => {
+  it('emite update:mode al cambiar la opcion activa', async () => {
     const wrapper = mount(GamePlayerToolbar, { props: { mode: 'demo' } })
-    const pills = wrapper.findAll('.ui-pill-toggle-group__pill')
-    await pills[1].trigger('click')
+    const options = wrapper.findAll('.ui-segmented-toggle__option')
+    await options[1].trigger('click')
     expect(wrapper.emitted('update:mode')?.[0]).toEqual(['real'])
   })
 

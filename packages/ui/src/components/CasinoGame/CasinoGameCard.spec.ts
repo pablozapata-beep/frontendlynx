@@ -31,13 +31,20 @@ describe('CasinoGameCard', () => {
 
   it('emite play al clickear', async () => {
     const wrapper = mount(CasinoGameCard, { props: { image: '/a.webp', title: 'x' } })
-    await wrapper.trigger('click')
+    await wrapper.find('.ui-casino-game-card__play-button').trigger('click')
     expect(wrapper.emitted('play')).toHaveLength(1)
   })
 
   it('expone un aria-label accesible con el titulo del juego', () => {
     const wrapper = mount(CasinoGameCard, { props: { image: '/a.webp', title: 'Plinko' } })
-    expect(wrapper.attributes('aria-label')).toContain('Plinko')
+    expect(wrapper.find('.ui-casino-game-card__play-button').attributes('aria-label')).toContain('Plinko')
+  })
+
+  it('el boton de play es un <button> real, alcanzable por teclado y lectores de pantalla', () => {
+    const wrapper = mount(CasinoGameCard, { props: { image: '/a.webp', title: 'x' } })
+    const playButton = wrapper.find('.ui-casino-game-card__play-button')
+    expect(playButton.element.tagName).toBe('BUTTON')
+    expect(playButton.attributes('aria-hidden')).toBeUndefined()
   })
 
   it('variant=overlay: titulo siempre visible en el footer, el play queda solo en el overlay de hover', () => {
