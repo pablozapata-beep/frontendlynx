@@ -56,4 +56,6 @@ export interface JackpotGame {
   closesAt: Date | number | string
   currency?: string
   config: RangeGameConfig | FixedGameConfig
+  /** URL de la pagina de detalle de la loteria. Si no se pasa, el nombre/logo y el link de "mas informacion" no se muestran como clickables. */
+  detailUrl?: string
 }

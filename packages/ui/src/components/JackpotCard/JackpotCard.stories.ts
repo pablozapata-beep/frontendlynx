@@ -30,6 +30,7 @@ const powerball: JackpotGame = {
     bonusLabel: 'Powerball',
     defaultPlays: 2,
   },
+  detailUrl: '/loterias/powerball',
 }
 
 const megaMillions: JackpotGame = {
@@ -54,6 +55,7 @@ const megaMillions: JackpotGame = {
     bonusLabel: 'Mega Ball',
     defaultPlays: 2,
   },
+  detailUrl: '/loterias/mega-millions',
 }
 
 const loteriaNacional: JackpotGame = {
@@ -75,6 +77,7 @@ const loteriaNacional: JackpotGame = {
     enteroDecimos: 10,
     enteroDiscount: 0.2,
   },
+  detailUrl: '/loterias/loteria-nacional',
 }
 
 const meta = {
@@ -136,6 +139,7 @@ export const MinimalProps: Story = {
         bonusMax: 10,
         defaultPlays: 1,
       },
+      detailUrl: '/loterias/mi-loteria',
     },
   },
   render: (args) => ({

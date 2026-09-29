@@ -14,7 +14,7 @@ const baseGroup: LotteryGroup = {
   jackpotAmount: 786_000_000,
   currency: 'us$',
   ticketsLabel: '20 Powerball · 20 Mega Millions por sorteo',
-  partialPath: 'powercombo',
+  detailUrl: '/loterias/powercombo',
   options: [
     { id: '1m', label: '1 mes', sorteosLabel: '36 sorteos', price: 40, min: 100, sold: 46, nextDrawLabel: '12 de julio' },
     { id: '3m', label: '3 meses', sorteosLabel: '108 sorteos', price: 110, min: 100, sold: 46, nextDrawLabel: '12 de julio' },
@@ -34,6 +34,21 @@ describe('LotteryTeamCard', () => {
     expect(wrapper.find('.ui-lottery-team-card__name').text()).toBe('Powercombo')
     expect(wrapper.find('.ui-lottery-team-card__sub').text()).toBe('150 participaciones totales')
     expect(wrapper.findAll('.ui-lottery-ball')).toHaveLength(2)
+  })
+
+  it('reenvia el logoUrl de cada ball a LotteryBallBadge, igual que JackpotCard', () => {
+    const withLogos: LotteryGroup = {
+      ...baseGroup,
+      balls: [
+        { id: 'pb', label: 'PB', background: '#E4002B', logoUrl: 'https://example.com/pb.png' },
+        { id: 'mm', label: 'MM', background: '#3E7BE8' },
+      ],
+    }
+    const wrapper = mount(LotteryTeamCard, { props: { group: withLogos } })
+    const images = wrapper.findAll('.ui-lottery-ball__logo')
+    expect(images).toHaveLength(1)
+    expect(images[0].attributes('src')).toBe('https://example.com/pb.png')
+    expect(images[0].attributes('alt')).toBe('PB')
   })
 
   it('formatea el jackpot en millones', () => {
@@ -62,21 +77,24 @@ describe('LotteryTeamCard', () => {
     expect(wrapper.find('.ui-pill-toggle-group').exists()).toBe(false)
   })
 
-  it('muestra "Faltan N para que juegue" cuando no se alcanzo el minimo', () => {
+  it('muestra "Faltan N para que juegue" cuando no se alcanzo el minimo, con el pill en variant info', () => {
     const wrapper = mount(LotteryTeamCard, { props: { group: baseGroup } })
     expect(wrapper.text()).toContain('Faltan 54 para que juegue')
+    expect(wrapper.find('.ui-pill').classes()).toContain('ui-pill--info')
   })
 
-  it('muestra "Listo para jugar" y el proximo sorteo cuando se alcanzo el minimo', () => {
+  it('muestra "Listo para jugar" y el proximo sorteo cuando se alcanzo el minimo, con el pill en variant gold', () => {
     const locked = { ...baseGroup, options: baseGroup.options.map((o) => ({ ...o, sold: 120 })) }
     const wrapper = mount(LotteryTeamCard, { props: { group: locked } })
     expect(wrapper.text()).toContain('Listo para jugar')
     expect(wrapper.text()).toContain('Sortea 12 de julio')
+    expect(wrapper.find('.ui-pill').classes()).toContain('ui-pill--gold')
   })
 
-  it('con isClosingSoon muestra las participaciones restantes en vez del estado de minimo', () => {
+  it('con isClosingSoon muestra las participaciones restantes en vez del estado de minimo, con el pill en variant danger', () => {
     const wrapper = mount(LotteryTeamCard, { props: { group: baseGroup, isClosingSoon: true } })
     expect(wrapper.text()).toContain('Cierra pronto – quedan 104 participaciones')
+    expect(wrapper.find('.ui-pill').classes()).toContain('ui-pill--danger')
   })
 
   it('emite join con el grupo y el indice de opcion seleccionado', async () => {
@@ -134,13 +152,53 @@ describe('LotteryTeamCard', () => {
     expect(wrapper.find('.ui-lottery-team-card__countdown').text()).toBe('Cierra en 02:04:59')
   })
 
-  it('emite moreInfo al clickear el link, solo si hay partialPath', () => {
+  it('muestra el link "mas informacion" solo si hay detailUrl', () => {
     const withLink = mount(LotteryTeamCard, { props: { group: baseGroup } })
     expect(withLink.find('.ui-lottery-team-card__more-info').exists()).toBe(true)
 
     const withoutLink = mount(LotteryTeamCard, {
-      props: { group: { ...baseGroup, partialPath: undefined } },
+      props: { group: { ...baseGroup, detailUrl: undefined } },
     })
     expect(withoutLink.find('.ui-lottery-team-card__more-info').exists()).toBe(false)
+  })
+
+  describe('con detailUrl', () => {
+    it('el nombre sigue siendo un h3, con un link adentro apuntando al detalle', () => {
+      const wrapper = mount(LotteryTeamCard, { props: { group: baseGroup } })
+      const name = wrapper.find('.ui-lottery-team-card__name')
+      expect(name.element.tagName).toBe('H3')
+      const link = name.find('a')
+      expect(link.exists()).toBe(true)
+      expect(link.attributes('href')).toBe('/loterias/powercombo')
+      expect(link.text()).toBe('Powercombo')
+    })
+
+    it('el logo/balls se vuelve un link al detalle, con aria-label accesible', () => {
+      const wrapper = mount(LotteryTeamCard, { props: { group: baseGroup } })
+      const link = wrapper.find('a.ui-lottery-team-card__balls')
+      expect(link.attributes('href')).toBe('/loterias/powercombo')
+      expect(link.attributes('aria-label')).toContain('Powercombo')
+      expect(link.findAll('.ui-lottery-ball')).toHaveLength(2)
+    })
+
+    it('muestra el link "mas informacion" apuntando al mismo detailUrl', () => {
+      const wrapper = mount(LotteryTeamCard, { props: { group: baseGroup } })
+      const link = wrapper.find('.ui-lottery-team-card__more-info')
+      expect(link.attributes('href')).toBe('/loterias/powercombo')
+      expect(link.text()).toBe('Más información del Grupo')
+    })
+  })
+
+  describe('sin detailUrl', () => {
+    const groupWithoutUrl = { ...baseGroup, detailUrl: undefined }
+
+    it('el nombre no tiene link adentro y las balls no son clickables', () => {
+      const wrapper = mount(LotteryTeamCard, { props: { group: groupWithoutUrl } })
+      const name = wrapper.find('.ui-lottery-team-card__name')
+      expect(name.element.tagName).toBe('H3')
+      expect(name.find('a').exists()).toBe(false)
+      expect(name.text()).toBe('Powercombo')
+      expect(wrapper.find('a.ui-lottery-team-card__balls').exists()).toBe(false)
+    })
   })
 })

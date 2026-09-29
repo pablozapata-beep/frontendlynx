@@ -25,7 +25,7 @@ export interface LotteryGroup {
   currency?: string
   /** Ej. "20 Powerball · 20 Mega Millions · 10 SuperEnalotto por sorteo" */
   ticketsLabel: string
-  /** Slug para armar el link a la pagina del grupo; si falta, no se muestra el link. */
-  partialPath?: string
+  /** URL de la pagina de detalle del grupo. Si no se pasa, el nombre/logo y el link de "mas informacion" no se muestran como clickables. */
+  detailUrl?: string
   options: LotteryGroupOption[]
 }

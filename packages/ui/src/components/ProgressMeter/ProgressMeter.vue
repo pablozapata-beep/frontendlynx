@@ -61,7 +61,7 @@ const minPercentage = computed(() =>
   position: absolute;
   inset: 0;
   width: 0%;
-  background: var(--color-primary);
+  background: var(--color-meter-gradient-blue);
   transition: width 0.6s cubic-bezier(0.16, 0.85, 0.24, 1);
 }
 .ui-progress-meter__fill::after {
@@ -76,10 +76,10 @@ const minPercentage = computed(() =>
 }
 
 .ui-progress-meter--locked .ui-progress-meter__fill {
-  background: var(--color-success);
+  background: var(--color-meter-gradient-gold);
 }
 .ui-progress-meter--closing .ui-progress-meter__fill {
-  background: var(--color-danger);
+  background: var(--color-meter-gradient-red);
 }
 
 .ui-progress-meter__min-marker {

@@ -9,7 +9,7 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'neutral'],
+      options: ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'neutral', 'gold'],
     },
     size: { control: 'select', options: ['sm', 'md'] },
     removable: { control: 'boolean' },
@@ -54,6 +54,21 @@ export const Variantes: Story = {
         <Pill variant="danger">Danger</Pill>
         <Pill variant="info">Info</Pill>
         <Pill variant="neutral">Neutral</Pill>
+        <Pill variant="gold">Gold</Pill>
+      </div>
+    `,
+  }),
+}
+
+export const Outline: Story = {
+  name: 'Variantes con outline (fondo transparente)',
+  render: () => ({
+    components: { Pill },
+    template: `
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; padding: 1rem; background: var(--color-surface-dark);">
+        <Pill variant="gold" outline>Listo para jugar</Pill>
+        <Pill variant="info" outline>Faltan 18 para que juegue</Pill>
+        <Pill variant="danger" outline>Cierra pronto</Pill>
       </div>
     `,
   }),

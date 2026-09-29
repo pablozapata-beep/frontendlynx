@@ -1,5 +1,5 @@
 <script setup lang="ts">
-type Variant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'neutral'
+type Variant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'neutral' | 'gold'
 type Size = 'sm' | 'md'
 
 withDefaults(
@@ -7,11 +7,14 @@ withDefaults(
     variant?: Variant
     size?: Size
     removable?: boolean
+    /** Fondo transparente con borde y texto del color de la variante, en vez del relleno solido. */
+    outline?: boolean
   }>(),
   {
     variant: 'neutral',
     size: 'md',
     removable: false,
+    outline: false,
   },
 )
 
@@ -21,7 +24,10 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <span class="ui-pill" :class="[`ui-pill--${variant}`, `ui-pill--${size}`]">
+  <span
+    class="ui-pill"
+    :class="[`ui-pill--${variant}`, `ui-pill--${size}`, { 'ui-pill--outline': outline }]"
+  >
     <slot />
     <button
       v-if="removable"
@@ -56,9 +62,18 @@ const emit = defineEmits<{
   font-size: 14px;
 }
 
+.ui-pill--primary,
+.ui-pill--success,
+.ui-pill--warning,
+.ui-pill--info,
+.ui-pill--danger,
+.ui-pill--info  {
+  color: white;
+}
+
 .ui-pill--primary {
   background: var(--color-primary);
-  color: white;
+  
 }
 .ui-pill--secondary {
   background: transparent;
@@ -67,24 +82,53 @@ const emit = defineEmits<{
 }
 .ui-pill--success {
   background: var(--color-success);
-  color: white;
 }
 .ui-pill--warning {
   background: var(--color-warning);
-  color: white;
 }
 .ui-pill--danger {
   background: var(--color-danger);
-  color: white;
 }
+
 .ui-pill--info {
   background: var(--color-info);
-  color: white;
 }
+
 .ui-pill--neutral {
   background: var(--color-surface);
   color: var(--color-text);
   border: 1px solid var(--color-border);
+}
+.ui-pill--gold {
+  background: var(--color-gold);
+  color: var(--color-text);
+}
+
+.ui-pill--outline {
+  background: transparent;
+  border: 1px solid currentColor;
+}
+.ui-pill--outline.ui-pill--primary {
+  color: var(--color-primary);
+}
+.ui-pill--outline.ui-pill--success {
+  color: var(--color-success);
+}
+.ui-pill--outline.ui-pill--warning {
+  color: var(--color-warning);
+}
+.ui-pill--outline.ui-pill--danger {
+  color: var(--color-danger);
+}
+.ui-pill--outline.ui-pill--info {
+  color: var(--color-info);
+}
+.ui-pill--outline.ui-pill--neutral {
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+.ui-pill--outline.ui-pill--gold {
+  color: var(--color-gold);
 }
 
 .ui-pill__remove {

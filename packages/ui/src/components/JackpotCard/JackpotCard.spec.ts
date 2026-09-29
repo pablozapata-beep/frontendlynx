@@ -101,7 +101,7 @@ describe('JackpotCard', () => {
 
   it('usa los defaults en espanol cuando no se pasan props de copy', () => {
     const wrapper = mount(JackpotCard, { props: { game: baseGame } })
-    expect(wrapper.text()).toContain('Bote actual')
+    expect(wrapper.text()).toContain('Pozo actual')
     expect(wrapper.text()).toContain('Sube en cada sorteo sin ganador')
     expect(wrapper.text()).toContain('Jugar ahora')
     expect(wrapper.text()).toContain('Sorteo: Sábado 22:00')
@@ -113,5 +113,52 @@ describe('JackpotCard', () => {
     })
     await vi.advanceTimersByTimeAsync(1000)
     expect(wrapper.emitted('expire')).toHaveLength(1)
+  })
+
+  describe('sin detailUrl', () => {
+    it('no muestra el nombre, el logo ni "mas informacion" como links, pero el nombre sigue siendo un h3', () => {
+      const wrapper = mount(JackpotCard, { props: { game: baseGame } })
+      expect(wrapper.find('.ui-jackpot-card__name a').exists()).toBe(false)
+      expect(wrapper.find('.ui-jackpot-card__name').element.tagName).toBe('H3')
+      expect(wrapper.find('.ui-jackpot-card__name').text()).toBe('Powerball')
+      expect(wrapper.find('a.ui-jackpot-card__balls').exists()).toBe(false)
+      expect(wrapper.find('.ui-jackpot-card__more-info').exists()).toBe(false)
+    })
+  })
+
+  describe('con detailUrl', () => {
+    const gameWithUrl: JackpotGame = { ...baseGame, detailUrl: '/loterias/powerball' }
+
+    it('el nombre sigue siendo un h3, con un link adentro apuntando al detalle', () => {
+      const wrapper = mount(JackpotCard, { props: { game: gameWithUrl } })
+      const name = wrapper.find('.ui-jackpot-card__name')
+      expect(name.element.tagName).toBe('H3')
+      const link = name.find('a')
+      expect(link.exists()).toBe(true)
+      expect(link.attributes('href')).toBe('/loterias/powerball')
+      expect(link.text()).toBe('Powerball')
+    })
+
+    it('el logo/balls se vuelve un link al detalle, con aria-label accesible', () => {
+      const wrapper = mount(JackpotCard, { props: { game: gameWithUrl } })
+      const link = wrapper.find('a.ui-jackpot-card__balls')
+      expect(link.attributes('href')).toBe('/loterias/powerball')
+      expect(link.attributes('aria-label')).toContain('Powerball')
+      expect(link.findAll('.ui-lottery-ball')).toHaveLength(2)
+    })
+
+    it('muestra el link "mas informacion" debajo del proximo sorteo', () => {
+      const wrapper = mount(JackpotCard, { props: { game: gameWithUrl } })
+      const link = wrapper.find('.ui-jackpot-card__more-info')
+      expect(link.attributes('href')).toBe('/loterias/powerball')
+      expect(link.text()).toBe('Más información de la lotería')
+    })
+
+    it('respeta la prop moreInfoLabel', () => {
+      const wrapper = mount(JackpotCard, {
+        props: { game: gameWithUrl, moreInfoLabel: 'Más información del Grupo' },
+      })
+      expect(wrapper.find('.ui-jackpot-card__more-info').text()).toBe('Más información del Grupo')
+    })
   })
 })

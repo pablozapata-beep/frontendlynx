@@ -55,4 +55,8 @@ const emit = defineEmits<{
   border-color: var(--color-primary);
   color: white;
 }
+
+.ui-pill-toggle-group__pill:hover:not(.ui-pill-toggle-group__pill--active) {  
+  border-color: #686D6E; 
+}
 </style>

@@ -10,14 +10,29 @@ const powercombo: LotteryGroup = {
   name: 'Powercombo',
   total: 150,
   balls: [
-    { id: 'pb', label: 'PB', background: '#E4002B' },
-    { id: 'se', label: 'SE', background: '#3FCB88' },
-    { id: 'mm', label: 'MM', background: '#3E7BE8' },
+    {
+      id: 'pb',
+      label: 'PB',
+      background: '#E4002B',
+      logoUrl: 'https://d3tmfelegj51yl.cloudfront.net/lotto-logos/wt/3.png',
+    },
+    {
+      id: 'se',
+      label: 'SE',
+      background: '#3FCB88',
+      logoUrl: 'https://d3tmfelegj51yl.cloudfront.net/lotto-logos/wt/2.png',
+    },
+    {
+      id: 'mm',
+      label: 'MM',
+      background: '#3E7BE8',
+      logoUrl: 'https://d3tmfelegj51yl.cloudfront.net/lotto-logos/wt/6.png',
+    },
   ],
   jackpotAmount: 786_000_000,
   currency: 'us$',
   ticketsLabel: '20 Powerball · 20 Mega Millions · 10 SuperEnalotto por sorteo',
-  partialPath: 'powercombo',
+  detailUrl: '/loterias/powercombo',
   options: [
     {
       id: '1m',

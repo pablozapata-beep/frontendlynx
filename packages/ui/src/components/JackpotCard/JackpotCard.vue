@@ -20,11 +20,12 @@ const props = withDefaults(
     countdownHourLabel?: string
     countdownMinuteLabel?: string
     countdownSecondLabel?: string
+    moreInfoLabel?: string
   }>(),
   {
-    jackpotLabel: 'Bote actual',
+    jackpotLabel: 'Pozo actual',
     jackpotNote: 'Sube en cada sorteo sin ganador',
-    hotBadgeLabel: '🔥 Pozo alto',
+    hotBadgeLabel: 'Pozo alto',
     ctaLabel: 'Jugar ahora',
     priceUnitLabel: undefined,
     drawPrefixLabel: 'Sorteo',
@@ -32,6 +33,7 @@ const props = withDefaults(
     countdownHourLabel: 'hs',
     countdownMinuteLabel: 'min',
     countdownSecondLabel: 'seg',
+    moreInfoLabel: 'Más información de la lotería',
   },
 )
 
@@ -55,16 +57,40 @@ function formatAmount(amount: number) {
   <Card variant="elevated" class="ui-jackpot-card">
     <div class="ui-jackpot-card__top">
       <div class="ui-jackpot-card__info">
-        <p class="ui-jackpot-card__name">{{ game.name }}</p>
+        <h3 class="ui-jackpot-card__name">
+          <a v-if="game.detailUrl" :href="game.detailUrl">{{ game.name }}</a>
+          <template v-else>{{ game.name }}</template>
+        </h3>
         <p class="ui-jackpot-card__region">{{ game.region }}</p>
       </div>
-      <div class="ui-jackpot-card__balls">
+      <component
+        :is="game.detailUrl ? 'a' : 'div'"
+        :href="game.detailUrl"
+        class="ui-jackpot-card__balls"
+        :aria-label="game.detailUrl ? `${game.name}: ${moreInfoLabel}` : undefined"
+      >
         <LotteryBallBadge v-for="ball in game.balls" :key="ball.id" v-bind="ball" />
-      </div>
+      </component>
     </div>
 
     <div v-if="game.hot || game.discountLabel" class="ui-jackpot-card__badges">
-      <Pill v-if="game.hot" variant="danger" size="sm">{{ hotBadgeLabel }}</Pill>
+      <Pill v-if="game.hot" variant="danger" size="sm">
+        <svg
+          class="ui-jackpot-card__hot-icon"
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0a5 5 0 0 1 1-3a1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4" />
+        </svg>
+        {{ hotBadgeLabel }}
+      </Pill>
       <Pill v-if="game.discountLabel" variant="success" size="sm">{{ game.discountLabel }}</Pill>
     </div>
 
@@ -95,6 +121,7 @@ function formatAmount(amount: number) {
     <Button variant="primary" @click="emit('play', game)">{{ ctaLabel }}</Button>
 
     <p class="ui-jackpot-card__next-draw">{{ drawPrefixLabel }}: {{ game.drawLabel }}</p>
+    <a v-if="game.detailUrl" :href="game.detailUrl" class="ui-jackpot-card__more-info">{{ moreInfoLabel }}</a>
   </Card>
 </template>
 
@@ -103,6 +130,7 @@ function formatAmount(amount: number) {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
+  min-height: 250px;
 }
 
 .ui-jackpot-card :deep(.ui-button) {
@@ -120,14 +148,20 @@ function formatAmount(amount: number) {
 }
 
 .ui-jackpot-card__name {
+  display: block;
   font-family: var(--font-family-heading);
   font-weight: 700;
   font-size: 20px;
   margin: 0;
+  padding:0 15px 0 0;
   color: var(--color-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.ui-jackpot-card__name a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .ui-jackpot-card__region {
@@ -143,11 +177,19 @@ function formatAmount(amount: number) {
 .ui-jackpot-card__balls > * + * {
   margin-left: -8px;
 }
+a.ui-jackpot-card__balls {
+  border-radius: 999px;
+  transition: transform 0.15s ease;
+}
 
 .ui-jackpot-card__badges {
   display: flex;
   gap: var(--spacing-sm);
   flex-wrap: wrap;
+}
+
+.ui-jackpot-card__hot-icon {
+  flex-shrink: 0;
 }
 
 .ui-jackpot-card__jackpot-label {
@@ -207,6 +249,20 @@ function formatAmount(amount: number) {
   font-size: 11px;
   opacity: 0.6;
   margin: 0;
+  margin-top: calc(-.8 * var(--spacing-sm));
   color: var(--color-text);
+}
+
+.ui-jackpot-card__more-info {
+  display: block;
+  /*margin-top: calc(-1.5 * var(--spacing-sm));*/
+  text-align: center;
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--color-primary);
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+  }
 }
 </style>

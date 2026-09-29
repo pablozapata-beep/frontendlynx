@@ -54,7 +54,6 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   join: [payload: { group: LotteryGroup; optionIndex: number }]
-  moreInfo: [group: LotteryGroup]
 }>()
 
 const selectedOptionIndex = ref(0)
@@ -94,7 +93,7 @@ const statusText = computed(() => {
 
 const statusVariant = computed(() => {
   if (props.isClosingSoon) return 'danger'
-  return isLocked.value ? 'success' : 'info'
+  return isLocked.value ? 'gold' : 'info'
 })
 
 const footerText = computed(() => {
@@ -114,22 +113,26 @@ watch(
 function onJoinClick() {
   emit('join', { group: props.group, optionIndex: selectedOptionIndex.value })
 }
-
-function onMoreInfoClick() {
-  emit('moreInfo', props.group)
-}
 </script>
 
 <template>
   <Card variant="elevated" class="ui-lottery-team-card">
     <div class="ui-lottery-team-card__top">
-      <div>
-        <p class="ui-lottery-team-card__name">{{ group.name }}</p>
+      <div class="ui-lottery-team-card__info">
+        <h3 class="ui-lottery-team-card__name">
+          <a v-if="group.detailUrl" :href="group.detailUrl">{{ group.name }}</a>
+          <template v-else>{{ group.name }}</template>
+        </h3>
         <p class="ui-lottery-team-card__sub">{{ group.total }} {{ totalParticipationsLabel }}</p>
       </div>
-      <div class="ui-lottery-team-card__balls">
+      <component
+        :is="group.detailUrl ? 'a' : 'div'"
+        :href="group.detailUrl"
+        class="ui-lottery-team-card__balls"
+        :aria-label="group.detailUrl ? `${group.name}: ${moreInfoLabel}` : undefined"
+      >
         <LotteryBallBadge v-for="ball in group.balls" :key="ball.id" v-bind="ball" />
-      </div>
+      </component>
     </div>
 
     <p v-if="jackpotAmount !== undefined" class="ui-lottery-team-card__jackpot">
@@ -188,22 +191,17 @@ function onMoreInfoClick() {
         <p class="ui-lottery-team-card__sold">
           {{ activeOption.sold }} / {{ group.total }} {{ soldSuffixLabel }}
         </p>
-        <Pill :variant="statusVariant" size="sm">{{ statusText }}</Pill>
+        <Pill :variant="statusVariant" size="sm" outline>{{ statusText }}</Pill>
       </div>
     </div>
 
     <Button variant="primary" @click="onJoinClick">{{ ctaLabel }}</Button>
 
-    <p class="ui-lottery-team-card__footer-text" :class="{ 'ui-lottery-team-card__footer-text--muted': !isLocked }">
+    <p class="ui-lottery-team-card__footer-text" :class="{ 'ui-lottery-team-card__footer-text--pending': !isLocked }">
       {{ footerText }}
     </p>
 
-    <a
-      v-if="group.partialPath"
-      href="javascript:void(0)"
-      class="ui-lottery-team-card__more-info"
-      @click="onMoreInfoClick"
-    >
+    <a v-if="group.detailUrl" :href="group.detailUrl" class="ui-lottery-team-card__more-info">
       {{ moreInfoLabel }}
     </a>
   </Card>
@@ -226,12 +224,27 @@ function onMoreInfoClick() {
   align-items: flex-start;
 }
 
+.ui-lottery-team-card__info {
+  min-width: 0;
+}
+
 .ui-lottery-team-card__name {
+  display: block;
   font-family: var(--font-family-heading);
   font-weight: 700;
   font-size: 20px;
   margin: 0;
   color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ui-lottery-team-card__name a {
+  color: inherit;
+  text-decoration: none;
+}
+.ui-lottery-team-card__name a:hover {
+  text-decoration: underline;
 }
 
 .ui-lottery-team-card__sub {
@@ -246,6 +259,13 @@ function onMoreInfoClick() {
 }
 .ui-lottery-team-card__balls > * + * {
   margin-left: -8px;
+}
+a.ui-lottery-team-card__balls {
+  border-radius: 999px;
+  transition: transform 0.15s ease;
+}
+a.ui-lottery-team-card__balls:hover {
+  transform: translateY(-2px);
 }
 
 .ui-lottery-team-card__jackpot {
@@ -354,6 +374,18 @@ function onMoreInfoClick() {
   justify-content: space-between;
   gap: var(--spacing-sm);
   flex-wrap: wrap;
+  .ui-pill--danger {
+    color:var(--color-red);
+    background: var(--color-meter-pill-bg-red);
+  }
+  .ui-pill--gold {
+    color:var(--color-gold);
+    background:var(--color-meter-pill-bg-gold)
+  }
+  .ui-pill--info {
+    color:var(--color-cyan);
+    background: var(--color-meter-pill-bg-blue);
+  }
 }
 .ui-lottery-team-card__sold {
   font-size: 12px;

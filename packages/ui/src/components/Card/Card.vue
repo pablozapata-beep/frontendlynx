@@ -32,7 +32,8 @@ withDefaults(
   font-family: var(--font-family-body);
   color: var(--color-text);
   overflow: hidden;
-  &.ui-jackpot-card {
+  &.ui-jackpot-card,
+  &.ui-lottery-team-card {
     background: var(--color-surface-gradient-dark-primary);
     &:hover {
       background: var(--color-surface-gradient-dark-secondary);

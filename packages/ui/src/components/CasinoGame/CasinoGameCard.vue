@@ -136,19 +136,21 @@ const formattedPlayers = computed(() => {
 
 .ui-casino-game-card__jackpot {
   position: absolute;
-  top: calc(-1 * var(--spacing-md));
+  top: calc(-0.6 * var(--spacing-md));
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
-  background: var(--color-background);
-  border: 1.5px solid var(--color-primary);
-  color: var(--color-primary);
+  background: var(--color-surface-highlight-gradient);
+  border: 1.5px solid var(--color-surface-highlight);
+  color: var(--color-white);
   font-family: var(--font-family-heading);
   font-weight: 800;
-  font-size: 12px;
+  font-size: clamp(.8rem, 4vw, .9rem);
+  text-shadow: 0 0 4px #000;;
   padding: 4px 12px;
   border-radius: 999px;
   white-space: nowrap;
+  box-shadow: 0 0 8px #000;
 }
 
 .ui-casino-game-card__overlay {

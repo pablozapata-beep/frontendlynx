@@ -130,7 +130,7 @@ const carouselRef = ref<InstanceType<typeof Carousel> | null>(null)
   width: 2.25rem;
   height: 2.25rem;
   flex-shrink: 0;
-  border-radius: 50%;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--color-border);
   background: var(--color-surface);
   color: var(--color-text);

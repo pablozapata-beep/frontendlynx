@@ -24,4 +24,15 @@ describe('Pill', () => {
     await wrapper.find('.ui-pill__remove').trigger('click')
     expect(wrapper.emitted('remove')).toHaveLength(1)
   })
+
+  it('sin outline no aplica el modificador', () => {
+    const wrapper = mount(Pill, { props: { variant: 'gold' } })
+    expect(wrapper.classes()).not.toContain('ui-pill--outline')
+  })
+
+  it('con outline aplica el modificador ademas de la clase de variante', () => {
+    const wrapper = mount(Pill, { props: { variant: 'gold', outline: true } })
+    expect(wrapper.classes()).toContain('ui-pill--outline')
+    expect(wrapper.classes()).toContain('ui-pill--gold')
+  })
 })

@@ -6,34 +6,64 @@
     border-radius: var(--radius-md);
     border:1px solid #E5E7EB;
     .ui-jackpot-card__name,
+    .ui-lottery-team-card__name,
     .ui-jackpot-card__region,
+    .ui-lottery-team-card__region,
     .ui-countdown__framed-value,
     .ui-countdown__framed-label,
     .ui-jackpot-card__jackpot-amount,
+    .ui-lottery-team-card__jackpot-amount,
     .ui-jackpot-card__price,
+    .ui-lottery-team-card__price,
     .ui-jackpot-card__jackpot-label,
     .ui-jackpot-card__next-draw,
     .ui-jackpot-card__jackpot-note,
-    .ui-jackpot-card__price-unit{
+    .ui-jackpot-card__price-unit,
+    .ui-lottery-team-card__price-unit,
+    .ui-jackpot-card__more-info,
+    .ui-lottery-team-card__footer-text--muted,
+    .ui-lottery-team-card__tickets,
+    .ui-lottery-team-card__more-info,
+    .ui-lottery-team-card__chances,
+    .ui-lottery-team-card__countdown,
+    .ui-lottery-team-card__jackpot-currency,
+    .ui-lottery-team-card__jackpot-word,
+    .ui-lottery-team-card__sub,
+    .ui-lottery-team-card__sold,
+    .ui-lottery-team-card__countdown .ui-countdown,
+    .ui-lottery-team-card__countdown .ui-countdown__value{
          color:var(--color-white);
     }
     .ui-jackpot-card__region,
+    .ui-lottery-team-card__region,
     .ui-countdown__framed-value,
-    .ui-jackpot-card__jackpot-label{
+    .ui-jackpot-card__jackpot-label,
+    .ui-lottery-team-card__sub,
+    .ui-lottery-team-card__countdown,
+    .ui-lottery-team-card__countdown .ui-countdown{
         opacity: .8;
     }
 
-     .ui-countdown__framed-label,
-     .ui-jackpot-card__jackpot-note,
+    .ui-countdown__framed-label,
+    .ui-jackpot-card__jackpot-note,
     .ui-jackpot-card__price-unit,
-    .ui-jackpot-card__next-draw {
+    .ui-jackpot-card__next-draw,
+    .ui-jackpot-card__more-info,
+    .ui-lottery-team-card__more-info,
+    .ui-lottery-team-card__jackpot-currency,
+    .ui-lottery-team-card__jackpot-word,
+    .ui-lottery-team-card__sold {
         opacity: .6;
      }
 
-     .ui-countdown__framed {
+    .ui-countdown__framed {
         border-top: 1px dashed var(--color-surface-dark-text-primary);
         border-bottom: 1px dashed var(--color-surface-dark-text-primary);
-     }
+    }
+
+    &.ui-lottery-team-card .ui-progress-meter {
+        background:#1f211f;
+    }
 }
 
 
@@ -42,3 +72,20 @@
         color:var(--green);
     }
 }
+
+[data-brand="nwt"] .ui-pill-toggle-group  {
+
+ 
+    .ui-pill-toggle-group__pill {
+        color:rgba(255,255,255, .8);
+        border-color:var(--color-surface-dark-light);
+        background:#1f211f;
+    }
+
+     .ui-pill-toggle-group__pill--active {
+        background: var(--color-gold);
+        border-color: var(--color-gold);
+        color: #000;
+    }
+}
+
