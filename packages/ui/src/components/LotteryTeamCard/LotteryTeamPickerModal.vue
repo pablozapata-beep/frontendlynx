@@ -86,7 +86,7 @@ function confirmAddToCart() {
 </script>
 
 <template>
-  <Modal :open="open" @close="emit('close')">
+  <Modal :open="open" sheet-class="ui-lottery-team-picker-modal" @close="emit('close')">
     <template v-if="group && option" #header>
       <div class="ui-lottery-team-picker-modal__header">
         <div class="ui-lottery-team-picker-modal__title-wrap">
@@ -94,27 +94,31 @@ function confirmAddToCart() {
           <p class="ui-lottery-team-picker-modal__subtitle">{{ option.label }} · {{ option.sorteosLabel }}</p>
         </div>
         <div class="ui-lottery-team-picker-modal__balls">
-          <LotteryBallBadge v-for="ball in group.balls" :key="ball.id" v-bind="ball" size="sm" />
+          <LotteryBallBadge v-for="ball in group.balls" :key="ball.id" v-bind="ball" size="md" />
         </div>
       </div>
 
       <div class="ui-lottery-team-picker-modal__meta-row">
         <p v-if="group.jackpotAmount" class="ui-lottery-team-picker-modal__jackpot">
-          <span>{{ group.currency ?? 'USD' }}</span>
-          <strong>{{ Math.round(group.jackpotAmount / 1_000_000) }} millones</strong>
+          <span class="ui-lottery-team-picker-modal__jackpot-currency">{{ group.currency ?? 'USD' }}</span>
+          <strong class="ui-lottery-team-picker-modal__jackpot-amount">{{ Math.round(group.jackpotAmount / 1_000_000) }} <span>millones</span></strong>
         </p>
-        <span class="ui-lottery-team-picker-modal__chances">
+       
+        
+      </div>
+      <div class="ui-lottery-team-picker-modal__meta-row meta-row-space-between">
+         <p class="ui-lottery-team-picker-modal__chances">
           <strong>{{ group.total }}</strong> {{ chancesLabel }}
-        </span>
-        <span v-if="option.nextDrawDate && !isDrawExpired" class="ui-lottery-team-picker-modal__countdown">
-          {{ closesInPrefixLabel }}
+        </p>
+        <div v-if="option.nextDrawDate && !isDrawExpired" class="ui-lottery-team-picker-modal__countdown">
+          <p>{{ closesInPrefixLabel }}</p>
           <Countdown
             :key="String(option.nextDrawDate)"
             variant="minimal"
             :target="option.nextDrawDate"
             @expire="isDrawExpired = true"
           />
-        </span>
+        </div>
         <span v-else-if="option.nextDrawDate" class="ui-lottery-team-picker-modal__countdown ui-lottery-team-picker-modal__countdown--closed">
           {{ closedLabel }}
         </span>
@@ -149,6 +153,7 @@ function confirmAddToCart() {
 </template>
 
 <style scoped>
+
 .ui-lottery-team-picker-modal__footer :deep(.ui-button) {
   width: 100%;
 }
@@ -158,6 +163,7 @@ function confirmAddToCart() {
   justify-content: space-between;
   align-items: flex-start;
   gap: var(--spacing-sm);
+  padding:0 1.5rem 0 0;
 }
 
 .ui-lottery-team-picker-modal__title {
@@ -191,21 +197,40 @@ function confirmAddToCart() {
   margin-top: var(--spacing-sm);
   font-size: 11.5px;
   color: var(--color-text);
+  &.meta-row-space-between {
+    line-height: .5;
+    justify-content: space-between;
+    margin:0;
+    padding:0;
+  }
 }
+.ui-lottery-team-picker-modal__jackpot,
+.ui-lottery-team-picker-modal__jackpot strong span{
+  font-size: clamp(.9rem, 4vw, 1rem);
+}
+
 .ui-lottery-team-picker-modal__jackpot {
   display: flex;
   align-items: baseline;
   gap: 4px;
-  margin: 0;
+  margin: .8rem 0 0 0;
   font-family: var(--font-family-heading);
 }
+
 .ui-lottery-team-picker-modal__jackpot span {
   opacity: 0.6;
   text-transform: lowercase;
 }
 .ui-lottery-team-picker-modal__jackpot strong {
-  font-size: 18px;
+  font-size: clamp(1.3rem, 5vw, 2rem);
   color: var(--color-primary);
+  font-weight: 800;
+}
+
+.ui-lottery-team-picker-modal__jackpot {
+  .ui-lottery-team-picker-modal__jackpot-currency {
+    font-weight: 600; 
+  }
 }
 .ui-lottery-team-picker-modal__chances {
   opacity: 0.6;
@@ -231,12 +256,16 @@ function confirmAddToCart() {
   opacity: 0.6;
 }
 
+.ui-lottery-team-picker-modal__tickets,
+.ui-lottery-team-picker-modal__stepper-label {
+   font-size: clamp(.7rem, 4vw, .8rem);
+}
+
 .ui-lottery-team-picker-modal__tickets {
   display: flex;
   flex-direction: column;
   gap: 4px;
   margin: 0 0 var(--spacing-md);
-  font-size: 11.5px;
   color: var(--color-text);
 }
 .ui-lottery-team-picker-modal__tickets span {
@@ -251,6 +280,9 @@ function confirmAddToCart() {
   align-items: center;
   justify-content: space-between;
   gap: var(--spacing-sm);
+  background: rgba(0,0,0,.3);
+  padding:.6rem;
+  border-radius: var(--radius-sm);
 }
 .ui-lottery-team-picker-modal__stepper-label {
   margin: 0;

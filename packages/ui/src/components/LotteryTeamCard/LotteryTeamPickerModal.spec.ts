@@ -37,6 +37,11 @@ describe('LotteryTeamPickerModal', () => {
     expect(document.querySelectorAll('.ui-lottery-ball')).toHaveLength(1)
   })
 
+  it('marca su .ui-modal-sheet con ui-lottery-team-picker-modal para poder apuntarlo desde los overrides de marca', () => {
+    mount(LotteryTeamPickerModal, { props: { open: true, group: baseGroup, optionIndex: 0 } })
+    expect(document.querySelector('.ui-modal-sheet.ui-lottery-team-picker-modal')).not.toBeNull()
+  })
+
   it('no renderiza contenido si no hay group', () => {
     mount(LotteryTeamPickerModal, { props: { open: true } })
     expect(document.querySelector('.ui-lottery-team-picker-modal__title')).toBeNull()

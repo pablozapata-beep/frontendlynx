@@ -59,8 +59,8 @@ watch(
   font-size: 9px;
 }
 .ui-lottery-ball--md {
-  width: 2rem;
-  height: 2rem;
+  width: 1.8rem;
+  height: 1.8rem;
   font-size: 11px;
 }
 

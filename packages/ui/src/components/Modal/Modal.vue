@@ -8,12 +8,15 @@ const props = withDefaults(
     closeOnBackdrop?: boolean
     closeOnEscape?: boolean
     bottomSheetOnMobile?: boolean
+    /** Clase extra para el .ui-modal-sheet: como el modal se teletransporta a <body>, un `class` en <Modal> no llegaria al DOM. */
+    sheetClass?: string
   }>(),
   {
     closeLabel: 'Cerrar',
     closeOnBackdrop: true,
     closeOnEscape: true,
     bottomSheetOnMobile: true,
+    sheetClass: undefined,
   },
 )
 
@@ -69,7 +72,7 @@ onBeforeUnmount(() => {
       :class="{ 'ui-modal-backdrop--sheet': bottomSheetOnMobile }"
       @click="onBackdropClick"
     >
-      <div class="ui-modal-sheet" role="dialog" aria-modal="true">
+      <div class="ui-modal-sheet" :class="sheetClass" role="dialog" aria-modal="true">
         <button
           ref="closeButtonRef"
           type="button"
@@ -103,6 +106,7 @@ onBeforeUnmount(() => {
   align-items: center;
   justify-content: center;
   padding: var(--spacing-lg);
+  backdrop-filter: blur(5px);
 }
 
 .ui-modal-sheet {
@@ -140,8 +144,14 @@ onBeforeUnmount(() => {
 }
 
 .ui-modal-header {
-  padding-right: 2.5rem;
+  padding-right: 1.5rem;
   margin-bottom: var(--spacing-md);
+}
+
+.ui-modal-sheet.ui-lottery-team-picker-modal {
+  .ui-modal-header {
+    padding:0;
+  }
 }
 
 .ui-modal-footer {

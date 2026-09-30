@@ -286,7 +286,7 @@ a.ui-lottery-team-card__balls:hover {
 .ui-lottery-team-card__jackpot-amount {
   font-family: var(--font-family-heading);
   font-weight: 800;
-  font-size: 32px;
+  font-size:  clamp(1.3rem, 5vw, 2rem);
   line-height: 1;
   color: var(--color-primary);
 }
@@ -366,12 +366,13 @@ a.ui-lottery-team-card__balls:hover {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
+  margin:0 0 1rem 0;
 }
 
 .ui-lottery-team-card__meter-status {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
   gap: var(--spacing-sm);
   flex-wrap: wrap;
   .ui-pill--danger {
@@ -397,7 +398,7 @@ a.ui-lottery-team-card__balls:hover {
 .ui-lottery-team-card__footer-text {
   text-align: center;
   font-size: 11.5px;
-  margin: 0;
+  margin-top: calc(-.8 * var(--spacing-sm));
   color: var(--color-primary);
 }
 .ui-lottery-team-card__footer-text--muted {

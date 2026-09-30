@@ -28,6 +28,13 @@ describe('Modal', () => {
     expect(document.querySelector('.ui-modal-footer')?.textContent?.trim()).toBe('Pie')
   })
 
+  it('aplica sheetClass al .ui-modal-sheet, que vive fuera del arbol del componente por el Teleport', () => {
+    mount(Modal, { props: { open: true, sheetClass: 'mi-modal' } })
+    const sheet = document.querySelector('.ui-modal-sheet')
+    expect(sheet?.classList.contains('mi-modal')).toBe(true)
+    expect(document.querySelector('.ui-modal-backdrop')?.contains(sheet)).toBe(true)
+  })
+
   it('emite close al clickear el boton de cerrar', () => {
     const wrapper = mount(Modal, { props: { open: true } })
     const closeBtn = document.querySelector('.ui-modal-close') as HTMLElement
