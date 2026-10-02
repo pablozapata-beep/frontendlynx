@@ -92,9 +92,9 @@ describe('LotteryTeamPickerModal', () => {
       options: [{ ...baseGroup.options[0], nextDrawDate: Date.now() + (9 * 3600 + 36 * 60 + 33) * 1000 }],
     }
     mount(LotteryTeamPickerModal, { props: { open: true, group: withDraw, optionIndex: 0 } })
-    expect(document.querySelector('.ui-lottery-team-picker-modal__countdown')!.textContent).toBe(
-      'Cierra en 09:36:33',
-    )
+    const countdown = document.querySelector('.ui-lottery-team-picker-modal__countdown')!
+    expect(countdown.querySelector('p')!.textContent).toBe('Cierra en')
+    expect(countdown.querySelector('.ui-countdown__value')!.textContent).toBe('09:36:33')
   })
 
   it('al expirar el countdown pasa a mostrar el label de cerrado', async () => {

@@ -108,8 +108,9 @@
         }
 
             .ui-quantity-stepper__btn:hover:not(:disabled) {
-                color: var(--color-gold);
-                border-color: var(--color-gold);
+                color: var(--color-white);
+                border-color: var(--color-white);
+                background: var(--color-primary);
             }
     }
     .ui-lottery-team-picker-modal__tickets span,
