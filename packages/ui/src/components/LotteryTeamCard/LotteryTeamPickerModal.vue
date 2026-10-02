@@ -166,12 +166,20 @@ function confirmAddToCart() {
   padding:0 1.5rem 0 0;
 }
 
+.ui-lottery-team-picker-modal__title-wrap {
+  min-width: 0;
+}
+
 .ui-lottery-team-picker-modal__title {
   font-family: var(--font-family-heading);
   font-weight: 700;
-  font-size: 18px;
+  font-size: clamp(1rem, 4vw, 1.25rem);
   margin: 0;
+  padding:0 1rem 0 0;
   color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .ui-lottery-team-picker-modal__subtitle {

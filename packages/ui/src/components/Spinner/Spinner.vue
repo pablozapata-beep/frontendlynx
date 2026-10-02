@@ -108,7 +108,7 @@ withDefaults(
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 0.15em solid var(--color-border);
+  border: 0.1em solid var(--color-border);
   border-top-color: currentColor;
   animation: ui-spinner-spin 0.8s linear infinite;
 }

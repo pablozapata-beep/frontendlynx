@@ -151,9 +151,9 @@ function formatAmount(amount: number) {
   display: block;
   font-family: var(--font-family-heading);
   font-weight: 700;
-  font-size: 20px;
+  font-size: clamp(1rem, 4vw, 1.25rem);
   margin: 0;
-  padding:0 15px 0 0;
+  padding:0 1rem 0 0;
   color: var(--color-text);
   white-space: nowrap;
   overflow: hidden;

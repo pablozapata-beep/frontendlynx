@@ -23,6 +23,7 @@ export { default as ProgressMeter } from './components/ProgressMeter/ProgressMet
 export { default as PromoSlider } from './components/PromoSlider/PromoSlider.vue'
 export { default as PromoSliderSlide } from './components/PromoSlider/PromoSliderSlide.vue'
 export type { PromoSliderImage } from './components/PromoSlider/PromoSlider.vue'
+export { default as BalancePill } from './components/BalancePill/BalancePill.vue'
 export { default as SegmentedToggle } from './components/SegmentedToggle/SegmentedToggle.vue'
 export { default as StatusIcon } from './components/StatusIcon/StatusIcon.vue'
 export { default as Spinner } from './components/Spinner/Spinner.vue'
