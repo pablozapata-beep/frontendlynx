@@ -3,6 +3,7 @@
   "color": {
     "primary": "#0E9F6E",
     "primary-hover": "#0B7A55",
+    "on-primary": "#fff",
     "primary-active-surface":"#a36243",
     "secondary-active-surface":"#747474",
     "secondary": "#F5A623",

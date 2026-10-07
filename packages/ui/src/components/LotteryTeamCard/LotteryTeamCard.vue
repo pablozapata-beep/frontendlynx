@@ -236,9 +236,9 @@ function onJoinClick() {
   margin: 0;
   padding:0 1rem 0 0;
   color: var(--color-text);
-  white-space: nowrap;
+  /*white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis;*/
 }
 
 .ui-lottery-team-card__name a,

@@ -125,6 +125,7 @@ const modeOptions = [
   justify-content: space-between;
   gap: var(--spacing-md);
   font-family: var(--font-family-body);
+  border-radius:var(--radius-sm);
   padding: var(--spacing-sm) var(--spacing-md);
   background: var(--color-surface-dark);
   border-top: 1px solid var(--color-border);
@@ -176,13 +177,13 @@ const modeOptions = [
 }
 
 .ui-game-player-toolbar__icon-btn:hover {
-  border-color: var(--color-primary);
+  border-color: var(--color-secondary-active-surface);
   color: var(--color-surface-dark-text-secondary);
 }
 
 .ui-game-player-toolbar__icon-btn--active {
   background: var(--color-secondary-active-surface);
-  border-color: var(--color-primary);
+  border-color: var(--color-secondary-active-surface);
   color: white;
 }
 

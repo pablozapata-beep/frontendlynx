@@ -153,5 +153,14 @@
         border:1px solid rgba(255,255,255,.5);
     }
 
+    .ui-number-grid {
+        .ui-number-grid__cell {
+            font-size: clamp(.8rem, 5vw, .9rem);
+            color:var(--color-white);
+            border: 1px solid var(--color-surface-dark-light);
+            background: var(--color-surface-dark-light);
+        }
+    }
+
 }
 

@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    target: Date | number | string
+    /** Fecha de cierre. Si falta (o es invalida) no hay sorteo en curso: se muestra `pendingLabel` y no corre el timer. */
+    target?: Date | number | string | null
     /** 'tiles': el clasico con recuadros por unidad. 'minimal': una linea de texto tipo "2 Días 11:15:33". 'framed': fila de numero+label enmarcada con un borde punteado arriba/abajo, como en una card. */
     variant?: 'tiles' | 'minimal' | 'framed'
     label?: string
@@ -11,16 +12,20 @@ const props = withDefaults(
     hourLabel?: string
     minuteLabel?: string
     secondLabel?: string
+    /** Texto que se muestra mientras no hay `target` (ej. esperando la apertura de un nuevo sorteo). */
+    pendingLabel?: string
     /** Solo variant="minimal": palabra "Día"/"Días" segun corresponda. */
     formatDays?: (days: number) => string
   }>(),
   {
+    target: undefined,
     variant: 'tiles',
     label: undefined,
     dayLabel: 'd',
     hourLabel: 'h',
     minuteLabel: 'm',
     secondLabel: 's',
+    pendingLabel: 'Pendiente',
     formatDays: (days: number) => (days === 1 ? 'Día' : 'Días'),
   },
 )
@@ -29,8 +34,11 @@ const emit = defineEmits<{
   expire: []
 }>()
 
-const targetTime = computed(() => new Date(props.target).getTime())
-const remainingMs = ref(Math.max(0, targetTime.value - Date.now()))
+const targetTime = computed(() =>
+  props.target === undefined || props.target === null ? NaN : new Date(props.target).getTime(),
+)
+const isPending = computed(() => Number.isNaN(targetTime.value))
+const remainingMs = ref(isPending.value ? 0 : Math.max(0, targetTime.value - Date.now()))
 
 const days = computed(() => Math.floor(remainingMs.value / 86_400_000))
 const hours = computed(() => Math.floor((remainingMs.value % 86_400_000) / 3_600_000))
@@ -47,14 +55,18 @@ const minimalText = computed(() => {
 let intervalId: ReturnType<typeof setInterval> | undefined
 let expired = false
 
+function stop() {
+  if (intervalId) {
+    clearInterval(intervalId)
+    intervalId = undefined
+  }
+}
+
 function tick() {
   remainingMs.value = Math.max(0, targetTime.value - Date.now())
 
   if (remainingMs.value === 0) {
-    if (intervalId) {
-      clearInterval(intervalId)
-      intervalId = undefined
-    }
+    stop()
     if (!expired) {
       expired = true
       emit('expire')
@@ -62,23 +74,41 @@ function tick() {
   }
 }
 
-onMounted(() => {
+function start() {
+  stop()
+  if (isPending.value) {
+    remainingMs.value = 0
+    return
+  }
   tick()
   if (remainingMs.value > 0) {
     intervalId = setInterval(tick, 1000)
   }
+}
+
+onMounted(start)
+
+// Cuando llega (o cambia) el target, ej. al abrirse un nuevo sorteo mientras estaba pendiente.
+watch(targetTime, () => {
+  expired = false
+  start()
 })
 
-onBeforeUnmount(() => {
-  if (intervalId) clearInterval(intervalId)
-})
+onBeforeUnmount(stop)
 </script>
 
 <template>
   <div class="ui-countdown" role="timer" aria-live="polite">
     <p v-if="label" class="ui-countdown__label">{{ label }}</p>
 
-    <p v-if="variant === 'minimal'" class="ui-countdown__value">{{ minimalText }}</p>
+    <template v-if="isPending">
+      <div v-if="variant === 'framed'" class="ui-countdown__framed">
+        <p class="ui-countdown__framed-pending">{{ pendingLabel }}</p>
+      </div>
+      <p v-else class="ui-countdown__value ui-countdown__pending">{{ pendingLabel }}</p>
+    </template>
+
+    <p v-else-if="variant === 'minimal'" class="ui-countdown__value">{{ minimalText }}</p>
 
     <div v-else-if="variant === 'framed'" class="ui-countdown__framed">
       <div class="ui-countdown__framed-box">
@@ -201,6 +231,21 @@ onBeforeUnmount(() => {
   font-weight: 700;
   font-size: 17px;
   color: var(--color-text);
+}
+
+.ui-countdown__framed-pending {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-white);
+  opacity: 0.8;
 }
 
 .ui-countdown__framed-label {

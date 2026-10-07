@@ -157,3 +157,16 @@ export const ExpiringSoon: Story = {
     template: `<div style="max-width: 22rem;"><JackpotCard v-bind="args" /></div>`,
   }),
 }
+
+export const SorteoPendiente: Story = {
+  name: 'Sorteo pendiente (sin closesAt)',
+  args: {
+    game: { ...powerball, closesAt: undefined },
+    pendingLabel: 'Pending',
+  },
+  render: (args) => ({
+    components: { JackpotCard },
+    setup: () => ({ args }),
+    template: `<div style="max-width: 22rem;"><JackpotCard v-bind="args" /></div>`,
+  }),
+}

@@ -79,3 +79,16 @@ export const Framed: Story = {
     template: `<div style="width: 16rem;"><Countdown v-bind="args" /></div>`,
   }),
 }
+
+export const FramedPendiente: Story = {
+  name: 'Variante framed — sorteo pendiente (sin target)',
+  args: {
+    variant: 'framed',
+    pendingLabel: 'Pending',
+  },
+  render: (args) => ({
+    components: { Countdown },
+    setup: () => ({ args }),
+    template: `<div style="width: 16rem;"><Countdown v-bind="args" /></div>`,
+  }),
+}

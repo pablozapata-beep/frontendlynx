@@ -147,4 +147,54 @@ describe('Countdown', () => {
       expect(wrapper.emitted('expire')).toHaveLength(1)
     })
   })
+
+  describe('sin target (sorteo pendiente)', () => {
+    it('framed: muestra pendingLabel dentro del marco, sin numeros ni timer', () => {
+      const wrapper = mount(Countdown, { props: { variant: 'framed', pendingLabel: 'Pending' } })
+      expect(wrapper.find('.ui-countdown__framed').exists()).toBe(true)
+      expect(wrapper.find('.ui-countdown__framed-pending').text()).toBe('Pending')
+      expect(wrapper.find('.ui-countdown__framed-value').exists()).toBe(false)
+    })
+
+    it('usa "Pendiente" por defecto', () => {
+      const wrapper = mount(Countdown, { props: { variant: 'framed' } })
+      expect(wrapper.find('.ui-countdown__framed-pending').text()).toBe('Pendiente')
+    })
+
+    it('minimal y tiles muestran pendingLabel en vez del contador', () => {
+      const minimal = mount(Countdown, { props: { variant: 'minimal', pendingLabel: 'Pending' } })
+      expect(minimal.find('.ui-countdown__pending').text()).toBe('Pending')
+
+      const tiles = mount(Countdown, { props: { pendingLabel: 'Pending' } })
+      expect(tiles.find('.ui-countdown__pending').text()).toBe('Pending')
+      expect(tiles.find('.ui-countdown__tile').exists()).toBe(false)
+    })
+
+    it('null tambien cuenta como pendiente y nunca emite expire', async () => {
+      const wrapper = mount(Countdown, { props: { target: null, variant: 'framed' } })
+      await vi.advanceTimersByTimeAsync(5000)
+      expect(wrapper.find('.ui-countdown__framed-pending').exists()).toBe(true)
+      expect(wrapper.emitted('expire')).toBeUndefined()
+    })
+
+    it('al llegar un target pasa a contar y al expirar emite expire', async () => {
+      const wrapper = mount(Countdown, { props: { variant: 'framed' } })
+      expect(wrapper.find('.ui-countdown__framed-pending').exists()).toBe(true)
+
+      await wrapper.setProps({ target: Date.now() + (1 * 3600 + 2 * 60 + 3) * 1000 })
+      const values = wrapper.findAll('.ui-countdown__framed-value').map((v) => v.text())
+      expect(values).toEqual(['00', '01', '02', '03'])
+
+      await vi.advanceTimersByTimeAsync((1 * 3600 + 2 * 60 + 3) * 1000)
+      await wrapper.vm.$nextTick()
+      expect(wrapper.emitted('expire')).toHaveLength(1)
+    })
+
+    it('si el target se quita vuelve a mostrar pendingLabel', async () => {
+      const wrapper = mount(Countdown, { props: { variant: 'framed', target: Date.now() + 60_000 } })
+      expect(wrapper.find('.ui-countdown__framed-pending').exists()).toBe(false)
+      await wrapper.setProps({ target: undefined })
+      expect(wrapper.find('.ui-countdown__framed-pending').exists()).toBe(true)
+    })
+  })
 })

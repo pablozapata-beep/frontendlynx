@@ -112,7 +112,7 @@ onBeforeUnmount(() => {
 .ui-modal-sheet {
   position: relative;
   background: var(--color-background);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   width: 32rem;
   max-width: 100%;
   max-height: 88vh;

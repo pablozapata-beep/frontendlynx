@@ -20,6 +20,8 @@ const props = withDefaults(
     countdownHourLabel?: string
     countdownMinuteLabel?: string
     countdownSecondLabel?: string
+    /** Texto del countdown cuando el juego no tiene `closesAt` (sorteo pendiente de apertura). */
+    pendingLabel?: string
     moreInfoLabel?: string
   }>(),
   {
@@ -33,6 +35,7 @@ const props = withDefaults(
     countdownHourLabel: 'hs',
     countdownMinuteLabel: 'min',
     countdownSecondLabel: 'seg',
+    pendingLabel: 'Pendiente',
     moreInfoLabel: 'Más información de la lotería',
   },
 )
@@ -107,6 +110,7 @@ function formatAmount(amount: number) {
       :hour-label="countdownHourLabel"
       :minute-label="countdownMinuteLabel"
       :second-label="countdownSecondLabel"
+      :pending-label="pendingLabel"
       @expire="emit('expire')"
     />
 

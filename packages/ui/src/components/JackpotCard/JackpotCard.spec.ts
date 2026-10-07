@@ -115,6 +115,34 @@ describe('JackpotCard', () => {
     expect(wrapper.emitted('expire')).toHaveLength(1)
   })
 
+  describe('sin closesAt (sorteo pendiente)', () => {
+    const { closesAt: _omit, ...gameWithoutDraw } = baseGame
+
+    it('muestra "Pendiente" por defecto en el marco del countdown, sin contador', () => {
+      const wrapper = mount(JackpotCard, { props: { game: gameWithoutDraw } })
+      expect(wrapper.find('.ui-countdown__framed-pending').text()).toBe('Pendiente')
+      expect(wrapper.find('.ui-countdown__framed-value').exists()).toBe(false)
+    })
+
+    it('respeta la prop pendingLabel', () => {
+      const wrapper = mount(JackpotCard, { props: { game: gameWithoutDraw, pendingLabel: 'Pending' } })
+      expect(wrapper.find('.ui-countdown__framed-pending').text()).toBe('Pending')
+    })
+
+    it('no emite expire', async () => {
+      const wrapper = mount(JackpotCard, { props: { game: gameWithoutDraw } })
+      await vi.advanceTimersByTimeAsync(5000)
+      expect(wrapper.emitted('expire')).toBeUndefined()
+    })
+
+    it('cuando se abre un nuevo sorteo (llega closesAt) pasa a mostrar el contador', async () => {
+      const wrapper = mount(JackpotCard, { props: { game: gameWithoutDraw } })
+      await wrapper.setProps({ game: { ...gameWithoutDraw, closesAt: Date.now() + 90_000 } })
+      expect(wrapper.find('.ui-countdown__framed-pending').exists()).toBe(false)
+      expect(wrapper.find('.ui-countdown__framed-value').exists()).toBe(true)
+    })
+  })
+
   describe('sin detailUrl', () => {
     it('no muestra el nombre, el logo ni "mas informacion" como links, pero el nombre sigue siendo un h3', () => {
       const wrapper = mount(JackpotCard, { props: { game: baseGame } })

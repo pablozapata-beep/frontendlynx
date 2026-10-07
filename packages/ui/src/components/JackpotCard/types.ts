@@ -53,7 +53,8 @@ export interface JackpotGame {
   oldPrice?: number
   discountLabel?: string
   drawLabel: string
-  closesAt: Date | number | string
+  /** Cierre del sorteo en curso. Si falta, el card muestra `pendingLabel` (esperando la apertura de un nuevo sorteo). */
+  closesAt?: Date | number | string
   currency?: string
   config: RangeGameConfig | FixedGameConfig
   /** URL de la pagina de detalle de la loteria. Si no se pasa, el nombre/logo y el link de "mas informacion" no se muestran como clickables. */

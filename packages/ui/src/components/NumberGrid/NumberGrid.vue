@@ -83,7 +83,7 @@ function toggle(n: number) {
   background: var(--color-surface);
   color: var(--color-text);
   font-family: var(--font-family-body);
-  font-size: 13px;
+  font-size: clamp(.8rem, 5vw, .9rem);
   font-weight: 600;
   cursor: pointer;
   display: flex;

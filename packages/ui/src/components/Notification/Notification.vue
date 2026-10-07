@@ -48,6 +48,7 @@ const ICONS: Record<NotificationVariant, string> = {
 
 <style scoped>
 .ui-notification {
+  position:relative;
   display: flex;
   align-items: flex-start;
   gap: var(--spacing-sm);
@@ -111,6 +112,9 @@ const ICONS: Record<NotificationVariant, string> = {
 }
 
 .ui-notification__dismiss {
+  position:absolute;
+  top:.25rem;
+  right:.25rem;
   border: none;
   background: transparent;
   color: var(--color-text);
