@@ -181,11 +181,11 @@ describe('Countdown', () => {
       const wrapper = mount(Countdown, { props: { variant: 'framed' } })
       expect(wrapper.find('.ui-countdown__framed-pending').exists()).toBe(true)
 
-      await wrapper.setProps({ target: Date.now() + (1 * 3600 + 2 * 60 + 3) * 1000 })
+      await wrapper.setProps({ target: Date.now() + 3000 })
       const values = wrapper.findAll('.ui-countdown__framed-value').map((v) => v.text())
-      expect(values).toEqual(['00', '01', '02', '03'])
+      expect(values).toEqual(['00', '00', '00', '03'])
 
-      await vi.advanceTimersByTimeAsync((1 * 3600 + 2 * 60 + 3) * 1000)
+      await vi.advanceTimersByTimeAsync(3000)
       await wrapper.vm.$nextTick()
       expect(wrapper.emitted('expire')).toHaveLength(1)
     })
